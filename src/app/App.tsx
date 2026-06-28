@@ -3,11 +3,11 @@ import { motion, AnimatePresence } from "motion/react";
 
 // ─── Styles ──────────────────────────────────────────────────────────────────
 const STYLES = `
-  @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800;12..96,900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800;12..96,900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { width: 100%; height: 100%; overflow: hidden; background: #050507; }
-  #root { width: 100%; height: 100%; }
+  html, body { width: 100%; height: 100%; height: 100dvh; overflow: hidden; background: #050507; -webkit-text-size-adjust: 100%; }
+  #root { width: 100%; height: 100%; height: 100dvh; }
 
   @media (pointer: fine) {
     *, *::before, *::after { cursor: none !important; }
@@ -20,11 +20,11 @@ const STYLES = `
   }
   .cursor-ring {
     position: fixed; top: 0; left: 0; width: 38px; height: 38px;
-    border: 1.5px solid rgba(168,85,247,0.65); border-radius: 50%;
+    border: 1.5px solid rgba(56,135,255,0.65); border-radius: 50%;
     pointer-events: none; z-index: 9998; will-change: transform;
     transition: width .35s ease, height .35s ease, background .35s ease, border-color .35s ease;
   }
-  .cursor-ring.hov { width: 64px; height: 64px; background: rgba(168,85,247,0.07); border-color: rgba(168,85,247,1); }
+  .cursor-ring.hov { width: 64px; height: 64px; background: rgba(56,135,255,0.07); border-color: rgba(56,135,255,1); }
 
   ::-webkit-scrollbar { display: none; }
   * { scrollbar-width: none; }
@@ -32,10 +32,33 @@ const STYLES = `
   .fd { font-family: 'Bricolage Grotesque', sans-serif; }
   .fb { font-family: 'Plus Jakarta Sans', sans-serif; }
   .fm { font-family: 'JetBrains Mono','Courier New',monospace; }
+  .fs { font-family: 'Fraunces', Georgia, serif; }
+
+  /* ── World overlay ── */
+  .world-rail { cursor: grab; }
+  .world-rail:active { cursor: grabbing; }
+  .world-rail::-webkit-scrollbar { display: none; }
+
+  .pillar-card { position: relative; overflow: hidden; flex-shrink: 0; transition: transform .5s cubic-bezier(.23,1,.32,1); }
+  .pillar-card .pc-media { transition: transform .9s cubic-bezier(.23,1,.32,1), filter .6s ease; }
+  .pillar-card:hover .pc-media { transform: scale(1.06); filter: brightness(1.12); }
+  .pillar-card .pc-cta { opacity: 0; transform: translateY(10px); transition: opacity .4s ease, transform .4s ease; }
+  .pillar-card:hover .pc-cta { opacity: 1; transform: translateY(0); }
+
+  .sol-card { position: relative; overflow: hidden; transition: transform .4s cubic-bezier(.23,1,.32,1), border-color .4s ease, background .4s ease; }
+  .sol-card:hover { transform: translateY(-4px); }
+
+  .fork-half { position: relative; overflow: hidden; transition: flex .7s cubic-bezier(.23,1,.32,1); }
+
+  @keyframes grain {
+    0%,100% { transform: translate(0,0); }
+    50% { transform: translate(-2%,1%); }
+  }
+  @keyframes drawPath { to { stroke-dashoffset: 0; } }
 
   @keyframes pulseGlow {
-    0%,100% { box-shadow: 0 0 20px rgba(168,85,247,.4), 0 0 40px rgba(168,85,247,.12); }
-    50%      { box-shadow: 0 0 55px rgba(168,85,247,.9), 0 0 110px rgba(168,85,247,.3); }
+    0%,100% { box-shadow: 0 0 20px rgba(56,135,255,.4), 0 0 40px rgba(56,135,255,.12); }
+    50%      { box-shadow: 0 0 55px rgba(56,135,255,.9), 0 0 110px rgba(56,135,255,.3); }
   }
   @keyframes float {
     0%,100% { transform: translateY(0) rotate(0deg); }
@@ -106,7 +129,7 @@ const STYLES = `
   .cta-glow { animation: pulseGlow 3s ease-in-out infinite; }
   .cta-glow:hover {
     animation: none;
-    box-shadow: 0 0 80px rgba(168,85,247,1), 0 0 160px rgba(168,85,247,.5);
+    box-shadow: 0 0 80px rgba(56,135,255,1), 0 0 160px rgba(56,135,255,.5);
     letter-spacing: .28em !important;
     transition: letter-spacing .4s ease, box-shadow .2s ease;
   }
@@ -124,7 +147,7 @@ const STYLES = `
     font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700;
     transition: border-color .3s ease;
   }
-  .underline-input:focus { border-bottom-color: rgba(168,85,247,.9); }
+  .underline-input:focus { border-bottom-color: rgba(56,135,255,.9); }
   .underline-input::placeholder { color: rgba(255,255,255,.18); }
 
   .dot-nav-btn {
@@ -132,13 +155,13 @@ const STYLES = `
     background: rgba(255,255,255,.22); border: none;
     transition: all .35s ease; display: block; cursor: pointer;
   }
-  .dot-nav-btn.active { width: 6px; height: 22px; border-radius: 3px; background: rgba(168,85,247,.9); }
+  .dot-nav-btn.active { width: 6px; height: 22px; border-radius: 3px; background: rgba(56,135,255,.9); }
 
   .chip {
     display: inline-block; padding: 5px 14px;
-    border: 1px solid rgba(168,85,247,.3); font-size: 10px;
-    letter-spacing: .18em; color: rgba(168,85,247,.8);
-    background: rgba(168,85,247,.06);
+    border: 1px solid rgba(56,135,255,.3); font-size: 10px;
+    letter-spacing: .18em; color: rgba(56,135,255,.8);
+    background: rgba(56,135,255,.06);
     font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;
   }
 
@@ -154,24 +177,130 @@ const STYLES = `
     .mob-show { display: flex !important; }
     .nav-links-desktop { display: none !important; }
     .process-layout { flex-direction: column !important; }
-    .process-right { display: none !important; }
-    .contact-layout { flex-direction: column !important; gap: 32px !important; }
+    .contact-layout { flex-direction: column !important; gap: 24px !important; }
+    .contact-footer { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; margin-top: 28px !important; }
+    .cf-tag { display: none !important; }
+    nav { padding: 15px 20px !important; }
   }
   @media (min-width: 769px) {
     .mob-show { display: none !important; }
   }
+  /* small phones */
+  @media (max-width: 400px) {
+    nav { padding: 13px 16px !important; }
+    .mob-menu { gap: 26px !important; }
+  }
+  /* short landscape / small height */
+  @media (max-height: 560px) {
+    nav { padding: 10px 20px !important; }
+  }
 `;
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
-const FRAME_NAMES = ["HERO", "MANIFESTO", "CAPABILITIES", "WORK", "PROCESS", "PROOF", "CONTACT"];
+const FRAME_NAMES = ["HERO", "MANIFESTO", "PILLARS", "SOLUTIONS", "WORK", "PROCESS", "PROOF", "CONTACT"];
+
+// ── Content Pillars (editorial, high-fashion) ──
+const PILLARS = [
+  {
+    id: "editorial", num: "01", title: "Editorial Product Content",
+    tagline: "Product as protagonist.",
+    desc: "Magazine-grade product imagery that frames your pieces like a fashion feature — not a catalogue.",
+    accent: "#e8c9a8", grad: "linear-gradient(150deg,#2a2018,#0c0906)",
+    deep: {
+      intro: "We treat every product like the cover story. Considered lighting, set design, and styling that makes the ordinary feel collectible.",
+      deliverables: ["Hero & detail still life", "On-model editorial sets", "Flat-lay & texture studies", "Seasonal lookbooks"],
+      outcome: "Premium perception that justifies premium pricing.",
+    },
+  },
+  {
+    id: "occasion", num: "02", title: "Occasion Styling",
+    tagline: "Dress the moment.",
+    desc: "Styling stories built around real occasions — so customers see themselves wearing it, not just looking at it.",
+    accent: "#d6b3c9", grad: "linear-gradient(150deg,#2a1822,#0c0608)",
+    deep: {
+      intro: "Context sells. We build styling narratives around weddings, dinners, travel and seasons that turn a single product into a dozen reasons to buy.",
+      deliverables: ["Occasion lookbooks", "Styling guides & pairings", "Seasonal capsule stories", "Gifting edits"],
+      outcome: "Higher basket size through aspirational context.",
+    },
+  },
+  {
+    id: "shortform", num: "03", title: "Short-Form Video",
+    tagline: "Engineered to spread.",
+    desc: "Scroll-stopping reels and TikToks built on hooks, pacing and trends that the algorithm rewards.",
+    accent: "#b3c9e0", grad: "linear-gradient(150deg,#16202c,#06090c)",
+    deep: {
+      intro: "Native, fast, and made to be watched twice. We script the hook, shoot for vertical, and cut for retention.",
+      deliverables: ["Hook-led reels & TikToks", "Trend-jacking edits", "UGC-style spots", "Series formats"],
+      outcome: "Organic reach that compounds week over week.",
+    },
+  },
+  {
+    id: "behind", num: "04", title: "Behind the Brand",
+    tagline: "The human layer.",
+    desc: "Founder story, craft, and process content that builds the trust no ad budget can buy.",
+    accent: "#c9c2b3", grad: "linear-gradient(150deg,#22201a,#08070a)",
+    deep: {
+      intro: "People buy from people. We document the makers, the materials and the moments that make your brand worth believing in.",
+      deliverables: ["Founder & team films", "Craft & process docs", "Studio day-in-the-life", "Values & mission pieces"],
+      outcome: "Loyalty rooted in authenticity, not discounts.",
+    },
+  },
+  {
+    id: "proof", num: "05", title: "Social Proof & Creator Styling",
+    tagline: "Borrowed credibility.",
+    desc: "Creator collaborations and customer proof that turn strangers into believers.",
+    accent: "#c4b3e0", grad: "linear-gradient(150deg,#20182c,#08060c)",
+    deep: {
+      intro: "We orchestrate creators and customers into a steady drumbeat of proof — styled, on-brand, and built to convert.",
+      deliverables: ["Creator styling direction", "UGC sourcing & rights", "Review & testimonial edits", "Reposting frameworks"],
+      outcome: "Trust at scale from voices that aren't yours.",
+    },
+  },
+  {
+    id: "softsell", num: "06", title: "Soft-Sell Conversion Content",
+    tagline: "Sell without shouting.",
+    desc: "Content that converts through desire and education — never the hard pitch.",
+    accent: "#b3e0c9", grad: "linear-gradient(150deg,#16261e,#06090a)",
+    deep: {
+      intro: "The close that doesn't feel like one. Value-first content that answers objections and makes buying the obvious next step.",
+      deliverables: ["Education & how-to content", "Objection-handling posts", "Comparison & value stories", "Subtle CTA frameworks"],
+      outcome: "Conversion lift without eroding brand equity.",
+    },
+  },
+];
+
+// ── Marketing Solutions (structured, sleek) ──
+const SOLUTIONS = [
+  { id: "brand", num: "01", title: "Marketing & Brand Strategy", cat: "FOUNDATION", desc: "Positioning, audience, and the strategic spine every other play hangs on.", deliverables: ["Market & competitor audit", "Positioning & messaging", "Audience & ICP mapping", "Brand guardrails"], outcome: "A clear, ownable position in the market." },
+  { id: "rhythm", num: "02", title: "Posting Rhythm Strategy", cat: "CONTENT OPS", desc: "A sustainable cadence and content system across every channel.", deliverables: ["Channel cadence plan", "Content pillars & calendar", "Format mix & ratios", "Workflow & approvals"], outcome: "Consistency that builds momentum, not burnout." },
+  { id: "web", num: "03", title: "Website & E-Commerce Strategy", cat: "DIGITAL", desc: "Store architecture, UX, and merchandising tuned to convert.", deliverables: ["Site & funnel architecture", "PDP & merchandising", "CRO roadmap", "Tech stack guidance"], outcome: "A storefront that sells while you sleep." },
+  { id: "paid", num: "04", title: "Paid Advertising Strategy", cat: "ACQUISITION", desc: "Full-funnel paid media built on creative testing and clean measurement.", deliverables: ["Channel & budget plan", "Creative testing matrix", "Audience architecture", "Scaling framework"], outcome: "Profitable, predictable acquisition." },
+  { id: "influencer", num: "05", title: "Influencer & Creator Strategy", cat: "PARTNERSHIPS", desc: "Creator programs that generate proof, reach, and content at once.", deliverables: ["Creator tiering & sourcing", "Brief & deliverable specs", "Seeding & gifting ops", "Performance tracking"], outcome: "A repeatable creator engine." },
+  { id: "crm", num: "06", title: "CRM & Retention Strategy", cat: "LIFECYCLE", desc: "Email, SMS, and loyalty flows that turn buyers into regulars.", deliverables: ["Lifecycle flow mapping", "Email & SMS automation", "Loyalty & VIP design", "Segmentation strategy"], outcome: "More revenue from customers you already have." },
+  { id: "pr", num: "07", title: "PR & Brand Credibility", cat: "AUTHORITY", desc: "Earned media and credibility markers that make the brand undeniable.", deliverables: ["Press & angle strategy", "Media & editor outreach", "Founder thought leadership", "Awards & features"], outcome: "Third-party validation at scale." },
+  { id: "creative", num: "08", title: "Creative Direction & Campaign Building", cat: "CREATIVE", desc: "Big-idea campaigns with a coherent visual and narrative system.", deliverables: ["Campaign concepting", "Art & creative direction", "Asset production plan", "Channel adaptation"], outcome: "Campaigns that feel like culture, not ads." },
+  {
+    id: "flagship", num: "09", title: "Flagship Store Marketing Strategy", cat: "RETAIL · FLAGSHIP", flagship: true,
+    desc: "The signature engagement — an end-to-end retail launch across four phases.",
+    deliverables: ["Pre-launch demand build", "Launch-day activation", "Post-launch retention", "In-store experience design"],
+    outcome: "A physical flagship that prints both revenue and brand.",
+    phases: [
+      { key: "pre", label: "Pre-launch Phase", desc: "Build demand before the doors open.", points: ["Teaser & waitlist campaign", "Local + creator seeding", "Press & VIP guest list", "Opening-week media plan"] },
+      { key: "launch", label: "Launch Phase", desc: "Make opening day unmissable.", points: ["Launch event & activation", "Live content capture", "Footfall-driving offers", "Real-time social coverage"] },
+      { key: "post", label: "Post-launch Phase", desc: "Convert the spike into a habit.", points: ["Retargeting & retention flows", "UGC & review harvesting", "Loyalty enrolment push", "Performance review & iterate"] },
+      { key: "exp", label: "Store Experience Ideas", desc: "Design moments worth posting.", points: ["Signature photo moments", "Sensory & spatial design", "In-store events calendar", "Clienteling & personalisation"] },
+    ],
+  },
+  { id: "kpi", num: "10", title: "Measurement & KPI Framework", cat: "REPORTING", desc: "The dashboard and cadence that proves what's working.", deliverables: ["North-star & KPI tree", "Dashboard & reporting", "Attribution approach", "Review cadence & rituals"], outcome: "Decisions driven by data, not vibes." },
+];
 
 const CAPS = [
   {
     num: "01", cat: "STRATEGY", title: "Market Win-Analysis",
     copy: "We reverse-engineer your competition and map an airtight path to the top before a single dollar is spent.",
-    accent: "#a855f7",
+    accent: "#3887ff",
     grad: "linear-gradient(135deg,rgba(88,28,135,.8) 0%,rgba(15,5,30,.9) 100%)",
-    border: "#a855f7",
+    border: "#3887ff",
     icon: "◈",
   },
   {
@@ -213,7 +342,7 @@ const PROJECTS = [
     id: "01", sector: "F&B / Consumer Goods", tag: "Brand Strategy + Social",
     headline: "From Local Roast to National Obsession",
     stats: [{ v: "340%", l: "Social Growth" }, { v: "2.1M", l: "Impressions" }, { v: "4.2x", l: "Revenue" }],
-    accent: "#a855f7",
+    accent: "#3887ff",
     grad: "linear-gradient(160deg,#120830 0%,#0a0420 100%)",
     type: "chart",
   },
@@ -241,6 +370,22 @@ const PROJECTS = [
     grad: "linear-gradient(160deg,#200408 0%,#0e0203 100%)",
     type: "film",
   },
+  {
+    id: "05", sector: "Experiential / Action Sports", tag: "Launch Strategy + Community Build",
+    headline: "Monetizing the Concrete: 10K Visitors in Month One",
+    stats: [{ v: "10K+", l: "Foot Traffic" }, { v: "120%", l: "Sponsorship Goal" }, { v: "Zero", l: "Ad Spend" }],
+    accent: "#34d399",
+    grad: "linear-gradient(160deg,#04241a 0%,#020e0a 100%)",
+    type: "arc",
+  },
+  {
+    id: "06", sector: "Health Tech / Wearables", tag: "E-Commerce + Product Launch",
+    headline: "Strapping In 50K New Users Without Breaking a Sweat",
+    stats: [{ v: "50K", l: "Active Users" }, { v: "-35%", l: "Cart Abandonment" }, { v: "$1M", l: "Q1 Sales" }],
+    accent: "#ec4899",
+    grad: "linear-gradient(160deg,#2a0820 0%,#120410 100%)",
+    type: "pulse",
+  },
 ];
 
 const STEPS = [
@@ -258,7 +403,7 @@ const TESTIMONIALS = [
 const BIG_STATS = [
   { v: "47+", l: "Brands Dominated" },
   { v: "$28M", l: "Revenue Generated" },
-  { v: "3", l: "Active Cities" },
+  { v: "5", l: "Active Cities" },
   { v: "100%", l: "Execution Rate" },
 ];
 
@@ -289,10 +434,10 @@ function AnimatedBackground({ frame }: { frame: number }) {
       const W = canvas.width, H = canvas.height;
       const f = fRef.current / 6;
       ctx.fillStyle = "#050507"; ctx.fillRect(0, 0, W, H);
-      orb((0.15 + Math.sin(t.current * .00055) * .12 + f * .3) * W, (0.28 + Math.cos(t.current * .0004) * .12) * H, W * .48, "rgba(110,30,240,.18)");
-      orb((0.80 + Math.cos(t.current * .00045) * .14 - f * .2) * W, (0.62 + Math.sin(t.current * .0006) * .12) * H, W * .4, "rgba(55,15,190,.14)");
-      orb((0.50 + Math.sin(t.current * .00038 + 2.1) * .2) * W, (0.10 + Math.cos(t.current * .0005 + 1.3) * .08 + f * .55) * H, W * .26, "rgba(168,85,247,.12)");
-      ctx.strokeStyle = "rgba(168,85,247,.017)"; ctx.lineWidth = .5;
+      orb((0.15 + Math.sin(t.current * .00055) * .12 + f * .3) * W, (0.28 + Math.cos(t.current * .0004) * .12) * H, W * .48, "rgba(40,90,235,.18)");
+      orb((0.80 + Math.cos(t.current * .00045) * .14 - f * .2) * W, (0.62 + Math.sin(t.current * .0006) * .12) * H, W * .4, "rgba(25,65,175,.14)");
+      orb((0.50 + Math.sin(t.current * .00038 + 2.1) * .2) * W, (0.10 + Math.cos(t.current * .0005 + 1.3) * .08 + f * .55) * H, W * .26, "rgba(56,135,255,.12)");
+      ctx.strokeStyle = "rgba(56,135,255,.017)"; ctx.lineWidth = .5;
       for (let x = 0; x < W; x += 90) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
       for (let y = 0; y < H; y += 90) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
       t.current++;
@@ -337,21 +482,21 @@ function NavBar({ frame, goTo }: { frame: number; goTo: (i: number) => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <>
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "20px 48px", display: "flex", justifyContent: "space-between", alignItems: "center", backdropFilter: "blur(24px)", background: "rgba(5,5,7,.5)", borderBottom: "1px solid rgba(168,85,247,.06)" }}>
+      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "20px 48px", display: "flex", justifyContent: "space-between", alignItems: "center", backdropFilter: "blur(24px)", background: "rgba(5,5,7,.5)", borderBottom: "1px solid rgba(56,135,255,.06)" }}>
         <button data-h onClick={() => goTo(0)} className="fd" style={{ fontSize: "13px", letterSpacing: ".32em", fontWeight: 900, color: "white", background: "none", border: "none" }}>ADAPT</button>
-        <div className="nav-links-desktop fb" style={{ display: "flex", gap: "40px" }}>
-          {[["Work", 3], ["Capabilities", 2], ["Process", 4], ["Contact", 6]].map(([n, i]) => (
+        <div className="nav-links-desktop fb" style={{ display: "flex", gap: "36px" }}>
+          {[["Pillars", 2], ["Solutions", 3], ["Work", 4], ["Process", 5], ["Contact", 7]].map(([n, i]) => (
             <button key={n} data-h onClick={() => goTo(i as number)} style={{ fontSize: "11px", letterSpacing: ".18em", color: "rgba(255,255,255,.36)", background: "none", border: "none", transition: "color .3s" }}
               onMouseEnter={e => (e.currentTarget.style.color = "white")} onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,.36)")}>{n}</button>
           ))}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-          <button data-h onClick={() => goTo(6)} className="fd desktop-only" style={{ fontSize: "10px", letterSpacing: ".22em", color: "rgba(168,85,247,.9)", background: "transparent", border: "1px solid rgba(168,85,247,.38)", padding: "9px 22px", fontWeight: 700, transition: "all .3s" }} onMouseEnter={e => { e.currentTarget.style.background = "rgba(168,85,247,.1)"; e.currentTarget.style.borderColor = "rgba(168,85,247,.8)"; }} onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(168,85,247,.38)"; }}>GET STARTED</button>
+          <button data-h onClick={() => goTo(7)} className="fd desktop-only" style={{ fontSize: "10px", letterSpacing: ".22em", color: "rgba(56,135,255,.9)", background: "transparent", border: "1px solid rgba(56,135,255,.38)", padding: "9px 22px", fontWeight: 700, transition: "all .3s" }} onMouseEnter={e => { e.currentTarget.style.background = "rgba(56,135,255,.1)"; e.currentTarget.style.borderColor = "rgba(56,135,255,.8)"; }} onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(56,135,255,.38)"; }}>GET STARTED</button>
           <button data-h className="mob-show" onClick={() => setMenuOpen(true)} style={{ background: "none", border: "none", display: "flex", flexDirection: "column", gap: "5px", padding: "4px" }}>
             {[0, 1, 2].map(i => <div key={i} style={{ width: "22px", height: "1.5px", background: "white" }} />)}
           </button>
         </div>
-        <div className="fm desktop-only" style={{ position: "absolute", bottom: "-28px", left: "50%", transform: "translateX(-50%)", fontSize: "9px", letterSpacing: ".4em", color: "rgba(168,85,247,.4)" }}>
+        <div className="fm desktop-only" style={{ position: "absolute", bottom: "-28px", left: "50%", transform: "translateX(-50%)", fontSize: "9px", letterSpacing: ".4em", color: "rgba(56,135,255,.4)" }}>
           {String(frame + 1).padStart(2, "0")} / {FRAME_NAMES.length.toString().padStart(2, "0")} — {FRAME_NAMES[frame]}
         </div>
       </nav>
@@ -359,10 +504,10 @@ function NavBar({ frame, goTo }: { frame: number; goTo: (i: number) => void }) {
         {menuOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="mob-menu">
             <button onClick={() => setMenuOpen(false)} style={{ position: "absolute", top: "24px", right: "24px", background: "none", border: "none", color: "white", fontSize: "24px" }}>✕</button>
-            {[["Work", 3], ["Capabilities", 2], ["Process", 4], ["Contact", 6]].map(([n, i]) => (
-              <button key={n} data-h onClick={() => { goTo(i as number); setMenuOpen(false); }} className="fd" style={{ fontSize: "clamp(32px,8vw,52px)", fontWeight: 900, color: "white", background: "none", border: "none", letterSpacing: "-.02em" }}>{n}</button>
+            {[["Pillars", 2], ["Solutions", 3], ["Work", 4], ["Process", 5], ["Contact", 7]].map(([n, i]) => (
+              <button key={n} data-h onClick={() => { goTo(i as number); setMenuOpen(false); }} className="fd" style={{ fontSize: "clamp(30px,7.5vw,48px)", fontWeight: 900, color: "white", background: "none", border: "none", letterSpacing: "-.02em" }}>{n}</button>
             ))}
-            <button data-h onClick={() => { goTo(6); setMenuOpen(false); }} className="fd" style={{ fontSize: "14px", letterSpacing: ".22em", color: "rgba(168,85,247,.9)", background: "rgba(168,85,247,.1)", border: "1px solid rgba(168,85,247,.4)", padding: "14px 36px", fontWeight: 700, marginTop: "16px" }}>GET STARTED</button>
+            <button data-h onClick={() => { goTo(7); setMenuOpen(false); }} className="fd" style={{ fontSize: "14px", letterSpacing: ".22em", color: "rgba(56,135,255,.9)", background: "rgba(56,135,255,.1)", border: "1px solid rgba(56,135,255,.4)", padding: "14px 36px", fontWeight: 700, marginTop: "16px" }}>GET STARTED</button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -383,9 +528,9 @@ function DotNav({ frame, goTo }: { frame: number; goTo: (i: number) => void }) {
 function Marquee() {
   const items = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
   return (
-    <div style={{ overflow: "hidden", borderTop: "1px solid rgba(168,85,247,.08)", borderBottom: "1px solid rgba(168,85,247,.08)", padding: "13px 0", background: "rgba(8,4,20,.5)" }}>
+    <div style={{ overflow: "hidden", borderTop: "1px solid rgba(56,135,255,.08)", borderBottom: "1px solid rgba(56,135,255,.08)", padding: "13px 0", background: "rgba(8,4,20,.5)" }}>
       <div style={{ display: "flex", animation: "marquee 28s linear infinite", width: "max-content" }}>
-        {items.map((t, i) => <span key={i} className="fm" style={{ fontSize: "10px", letterSpacing: ".3em", color: "rgba(168,85,247,.55)", marginRight: "40px", whiteSpace: "nowrap" }}>{t}</span>)}
+        {items.map((t, i) => <span key={i} className="fm" style={{ fontSize: "10px", letterSpacing: ".3em", color: "rgba(56,135,255,.55)", marginRight: "40px", whiteSpace: "nowrap" }}>{t}</span>)}
       </div>
     </div>
   );
@@ -395,29 +540,29 @@ function Marquee() {
 function HeroFrame({ onNext }: { onNext: () => void }) {
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "0 24px", position: "relative" }}>
-      <div className="desktop-only" style={{ position: "absolute", width: "520px", height: "520px", borderRadius: "50%", border: "1px solid rgba(168,85,247,.06)", animation: "spinSlow 40s linear infinite", pointerEvents: "none" }}>
-        {[0, 45, 90, 135, 180, 225, 270, 315].map(deg => <div key={deg} style={{ position: "absolute", width: "5px", height: "5px", borderRadius: "50%", background: "rgba(168,85,247,.4)", top: "50%", left: "50%", transform: `rotate(${deg}deg) translateX(259px) translateY(-50%)` }} />)}
+      <div className="desktop-only" style={{ position: "absolute", width: "520px", height: "520px", borderRadius: "50%", border: "1px solid rgba(56,135,255,.06)", animation: "spinSlow 40s linear infinite", pointerEvents: "none" }}>
+        {[0, 45, 90, 135, 180, 225, 270, 315].map(deg => <div key={deg} style={{ position: "absolute", width: "5px", height: "5px", borderRadius: "50%", background: "rgba(56,135,255,.4)", top: "50%", left: "50%", transform: `rotate(${deg}deg) translateX(259px) translateY(-50%)` }} />)}
       </div>
-      <div className="desktop-only" style={{ position: "absolute", width: "340px", height: "340px", borderRadius: "50%", border: "1px solid rgba(168,85,247,.04)", animation: "spinSlowRev 28s linear infinite", pointerEvents: "none" }} />
+      <div className="desktop-only" style={{ position: "absolute", width: "340px", height: "340px", borderRadius: "50%", border: "1px solid rgba(56,135,255,.04)", animation: "spinSlowRev 28s linear infinite", pointerEvents: "none" }} />
 
       <motion.div initial={{ opacity: 0, y: 48 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(168,85,247,.7)", marginBottom: "32px" }}>◆ ALL-IN-ONE EXECUTION SQUAD ◆</div>
+        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(56,135,255,.7)", marginBottom: "32px" }}>◆ ALL-IN-ONE EXECUTION SQUAD ◆</div>
         <h1 className="fd" style={{ fontSize: "clamp(60px,14vw,200px)", fontWeight: 900, lineHeight: .87, letterSpacing: "-.035em", color: "white", marginBottom: "36px" }}>
           WE BUILD<br />
-          <span style={{ WebkitTextStroke: "2px rgba(168,85,247,.55)", WebkitTextFillColor: "transparent", display: "inline-block" }}>ADAPT.</span>
+          <span style={{ WebkitTextStroke: "2px rgba(56,135,255,.55)", WebkitTextFillColor: "transparent", display: "inline-block" }}>ADAPT.</span>
         </h1>
         <p className="fb" style={{ fontSize: "clamp(14px,1.3vw,17px)", color: "rgba(255,255,255,.38)", maxWidth: "520px", margin: "0 auto 52px", lineHeight: 1.78, fontWeight: 300 }}>
           An all-in-one execution squad for brands that refuse to look ordinary. Strategy, social, cinema-grade content, next-gen web — and the streets. We handle everything.
         </p>
         <div style={{ display: "flex", gap: "18px", flexWrap: "wrap", justifyContent: "center" }}>
-          <button data-h className="cta-glow fd" onClick={onNext} style={{ fontSize: "11px", letterSpacing: ".22em", color: "white", background: "rgba(168,85,247,.1)", border: "1px solid rgba(168,85,247,.55)", padding: "18px 48px", fontWeight: 700 }}>[ ESCAPE THE ORDINARY ]</button>
+          <button data-h className="cta-glow fd" onClick={onNext} style={{ fontSize: "11px", letterSpacing: ".22em", color: "white", background: "rgba(56,135,255,.1)", border: "1px solid rgba(56,135,255,.55)", padding: "18px 48px", fontWeight: 700 }}>[ ESCAPE THE ORDINARY ]</button>
           <button data-h className="fb" onClick={onNext} style={{ fontSize: "11px", letterSpacing: ".1em", color: "rgba(255,255,255,.45)", background: "transparent", border: "1px solid rgba(255,255,255,.12)", padding: "18px 36px", fontWeight: 400, transition: "all .3s" }} onMouseEnter={e => { e.currentTarget.style.color = "white"; e.currentTarget.style.borderColor = "rgba(255,255,255,.3)"; }} onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,.45)"; e.currentTarget.style.borderColor = "rgba(255,255,255,.12)"; }}>See Our Work ↓</button>
         </div>
       </motion.div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5, duration: 1 }} style={{ position: "absolute", bottom: "36px", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
         <span className="fm" style={{ fontSize: "8px", letterSpacing: ".38em", color: "rgba(255,255,255,.22)" }}>SCROLL</span>
-        <div style={{ width: "1px", height: "52px", background: "rgba(168,85,247,.5)", animation: "slideBar 2s ease-in-out infinite" }} />
+        <div style={{ width: "1px", height: "52px", background: "rgba(56,135,255,.5)", animation: "slideBar 2s ease-in-out infinite" }} />
       </motion.div>
     </div>
   );
@@ -434,12 +579,12 @@ function ManifestoFrame({ active }: { active: boolean }) {
   }, [active]);
   return (
     <div style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 52px", position: "relative" }}>
-      <div className="fm" style={{ position: "absolute", top: "88px", left: "52px", fontSize: "9px", letterSpacing: ".4em", color: "rgba(168,85,247,.45)" }}>THE MANIFESTO</div>
-      <div style={{ position: "absolute", left: "52px", top: "50%", transform: "translateY(-50%)", width: "2px", height: "120px", background: "linear-gradient(to bottom,transparent,rgba(168,85,247,.6),transparent)" }} />
+      <div className="fm" style={{ position: "absolute", top: "88px", left: "52px", fontSize: "9px", letterSpacing: ".4em", color: "rgba(56,135,255,.45)" }}>THE MANIFESTO</div>
+      <div style={{ position: "absolute", left: "52px", top: "50%", transform: "translateY(-50%)", width: "2px", height: "120px", background: "linear-gradient(to bottom,transparent,rgba(56,135,255,.6),transparent)" }} />
       <div style={{ maxWidth: "900px" }}>
         <p className="fd" style={{ fontSize: "clamp(24px,3.5vw,50px)", fontWeight: 800, lineHeight: 1.45, letterSpacing: "-.01em" }}>
           {ULTIMATUM_WORDS.map((w, i) => (
-            <span key={i} style={{ display: "inline-block", marginRight: ".28em", color: i <= idx ? "#fff" : "rgba(255,255,255,.06)", textShadow: i <= idx ? "0 0 28px rgba(168,85,247,.4)" : "none", transition: "color .3s ease, text-shadow .3s ease" }}>{w}</span>
+            <span key={i} style={{ display: "inline-block", marginRight: ".28em", color: i <= idx ? "#fff" : "rgba(255,255,255,.06)", textShadow: i <= idx ? "0 0 28px rgba(56,135,255,.4)" : "none", transition: "color .3s ease, text-shadow .3s ease" }}>{w}</span>
           ))}
         </p>
       </div>
@@ -455,11 +600,11 @@ function StrategyViz({ active }: { active: boolean }) {
       {bars.map((h, i) => (
         <div key={i} style={{
           flex: 1, borderRadius: "2px 2px 0 0",
-          background: `linear-gradient(to top,rgba(168,85,247,.9),rgba(168,85,247,.3))`,
+          background: `linear-gradient(to top,rgba(56,135,255,.9),rgba(56,135,255,.3))`,
           height: `${h}%`, transformOrigin: "bottom",
           transform: active ? "scaleY(1)" : "scaleY(0)",
           transition: `transform 0.6s cubic-bezier(0.23,1,0.32,1) ${i * 0.06}s`,
-          boxShadow: active ? "0 0 8px rgba(168,85,247,.5)" : "none",
+          boxShadow: active ? "0 0 8px rgba(56,135,255,.5)" : "none",
         }} />
       ))}
     </div>
@@ -600,7 +745,7 @@ function MobileCarousel<T>({ items, renderItem, autoInterval = 3500, perSlide = 
         {slides.map((_, i) => (
           <div key={i} onClick={() => go(i)} data-h style={{
             width: sIdx === i ? "22px" : "6px", height: "6px", borderRadius: "3px",
-            background: sIdx === i ? "rgba(168,85,247,.9)" : "rgba(255,255,255,.2)",
+            background: sIdx === i ? "rgba(56,135,255,.9)" : "rgba(255,255,255,.2)",
             transition: "all .35s ease", cursor: "pointer",
           }} />
         ))}
@@ -643,7 +788,7 @@ function CapabilitiesFrame({ active }: { active: boolean }) {
   const header = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "20px", flexWrap: "wrap", gap: "12px", flexShrink: 0 }}>
       <div>
-        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(168,85,247,.65)", marginBottom: "10px" }}>CAPABILITIES</div>
+        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(56,135,255,.65)", marginBottom: "10px" }}>CAPABILITIES</div>
         <h2 className="fd" style={{ fontSize: "clamp(30px,5vw,64px)", fontWeight: 900, color: "white", lineHeight: .93, letterSpacing: "-.025em" }}>
           EVERY WEAPON.<br />ONE ARSENAL.
         </h2>
@@ -741,6 +886,39 @@ function FilmViz({ accent }: { accent: string }) {
   );
 }
 
+function ArcViz({ accent }: { accent: string }) {
+  // glowing ramp / arched growth curve with staggered data points
+  const pts = [[40, 96], [95, 70], [150, 50], [205, 36], [262, 22]];
+  return (
+    <div style={{ height: "64px" }}>
+      <svg width="100%" height="100%" viewBox="0 0 300 110" preserveAspectRatio="xMidYMid meet" style={{ overflow: "visible" }}>
+        <path d="M16,108 Q150,-26 286,108" fill="none" stroke={`${accent}26`} strokeWidth="1" />
+        <path d="M16,108 Q150,-26 286,108" fill="none" stroke={accent} strokeWidth="2.5" strokeLinecap="round"
+          strokeDasharray="430" strokeDashoffset="430" style={{ filter: `drop-shadow(0 0 5px ${accent})`, animation: "drawPath 1.1s ease forwards" }} />
+        {pts.map(([x, y], i) => (
+          <circle key={i} cx={x} cy={y} r="4" fill={accent} style={{ opacity: 0, filter: `drop-shadow(0 0 5px ${accent})`, animation: `fadeScale .3s ease ${0.3 + i * 0.15}s forwards` }} />
+        ))}
+      </svg>
+    </div>
+  );
+}
+
+function PulseViz({ accent }: { accent: string }) {
+  // heartbeat / sine wave transitioning into an upward arrow
+  return (
+    <div style={{ height: "64px" }}>
+      <svg width="100%" height="100%" viewBox="0 0 300 90" preserveAspectRatio="xMidYMid meet" style={{ overflow: "visible" }}>
+        <path d="M6,52 L46,52 L60,52 L70,26 L84,72 L98,40 L110,52 L150,52 L168,52 L210,16 L268,16"
+          fill="none" stroke={accent} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+          strokeDasharray="520" strokeDashoffset="520" style={{ filter: `drop-shadow(0 0 5px ${accent})`, animation: "drawPath 1.3s ease forwards" }} />
+        {/* arrow head */}
+        <path d="M250,8 L270,14 L256,28" fill="none" stroke={accent} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+          style={{ opacity: 0, filter: `drop-shadow(0 0 5px ${accent})`, animation: "fadeScale .3s ease 1.15s forwards" }} />
+      </svg>
+    </div>
+  );
+}
+
 // ─── Frame 3: Work ────────────────────────────────────────────────────────────
 function WorkCard({ p, hov, onHov }: { p: typeof PROJECTS[0]; hov: boolean; onHov: (v: boolean) => void }) {
   const vizMap: Record<string, () => JSX.Element> = {
@@ -748,6 +926,8 @@ function WorkCard({ p, hov, onHov }: { p: typeof PROJECTS[0]; hov: boolean; onHo
     code:  () => <CodeViz accent={p.accent} />,
     map:   () => <MapViz accent={p.accent} />,
     film:  () => <FilmViz accent={p.accent} />,
+    arc:   () => <ArcViz accent={p.accent} />,
+    pulse: () => <PulseViz accent={p.accent} />,
   };
   return (
     <div
@@ -787,7 +967,7 @@ function WorkFrame({ active }: { active: boolean }) {
   const header = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "20px", flexWrap: "wrap", gap: "12px", flexShrink: 0 }}>
       <div>
-        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(168,85,247,.65)", marginBottom: "10px" }}>SELECTED WORK</div>
+        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(56,135,255,.65)", marginBottom: "10px" }}>SELECTED WORK</div>
         <h2 className="fd" style={{ fontSize: "clamp(30px,5vw,64px)", fontWeight: 900, color: "white", lineHeight: .93, letterSpacing: "-.025em" }}>PROOF OVER<br />PROMISES.</h2>
       </div>
       <div className="chip fm">47 BRANDS DOMINATED</div>
@@ -843,11 +1023,54 @@ function Particles({ count = 18 }: { count?: number }) {
         <div key={i} style={{
           position: "absolute", left: `${p.x}%`, top: `${p.y}%`,
           width: `${p.size}px`, height: `${p.size}px`, borderRadius: "50%",
-          background: "rgba(168,85,247,.7)",
+          background: "rgba(56,135,255,.7)",
           animation: `particleDrift ${p.dur}s ease-in-out ${p.delay}s infinite`,
           opacity: p.opacity,
-          boxShadow: "0 0 4px rgba(168,85,247,.4)",
+          boxShadow: "0 0 4px rgba(56,135,255,.4)",
         }} />
+      ))}
+    </div>
+  );
+}
+
+// ─── Process per-step animated visual ─────────────────────────────────────────
+function StepVisual({ step }: { step: number }) {
+  const A = "#3887ff";
+  // re-mounts on step change (key) so CSS animations replay
+  if (step === 0) {
+    // ARCHITECT — blueprint grid + drawing route + plotted nodes
+    return (
+      <svg width="100%" height="100%" viewBox="0 0 320 130" preserveAspectRatio="xMidYMid meet" style={{ overflow: "visible" }}>
+        {[0, 26, 52, 78, 104, 130].map(y => <line key={"h" + y} x1="0" y1={y} x2="320" y2={y} stroke={`${A}1a`} strokeWidth=".5" />)}
+        {[0, 53, 106, 160, 213, 266, 320].map(x => <line key={"v" + x} x1={x} y1="0" x2={x} y2="130" stroke={`${A}1a`} strokeWidth=".5" />)}
+        <path d="M10,110 L80,80 L150,92 L215,40 L300,18" fill="none" stroke={A} strokeWidth="2.5"
+          strokeDasharray="420" strokeDashoffset="420" style={{ filter: `drop-shadow(0 0 5px ${A})`, animation: "drawPath 1.1s ease forwards" }} />
+        {[[10, 110], [80, 80], [150, 92], [215, 40], [300, 18]].map(([x, y], i) => (
+          <circle key={i} cx={x} cy={y} r="4" fill={A} style={{ opacity: 0, filter: `drop-shadow(0 0 5px ${A})`, animation: `fadeScale .3s ease ${0.25 + i * 0.16}s forwards` }} />
+        ))}
+      </svg>
+    );
+  }
+  if (step === 1) {
+    // EXECUTE — parallel build bars rising + scan
+    const bars = [44, 70, 56, 92, 64, 100, 80, 96];
+    return (
+      <div style={{ height: "100%", display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "10px", padding: "0 8px" }}>
+        {bars.map((h, i) => (
+          <div key={i} style={{ width: "26px", height: `${h}%`, borderRadius: "3px 3px 0 0",
+            background: `linear-gradient(to top, ${A}, ${A}33)`, transformOrigin: "bottom",
+            transform: "scaleY(0)", animation: `barRise .5s cubic-bezier(.23,1,.32,1) ${i * 0.07}s forwards`,
+            boxShadow: `0 0 10px ${A}55` }} />
+        ))}
+      </div>
+    );
+  }
+  // DOMINATE — expanding broadcast rings from a core
+  return (
+    <div style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+      <div style={{ width: "22px", height: "22px", borderRadius: "50%", background: A, boxShadow: `0 0 24px ${A}`, position: "relative", zIndex: 2 }} />
+      {[0, 1, 2, 3].map(i => (
+        <div key={i} style={{ position: "absolute", width: "44px", height: "44px", borderRadius: "50%", border: `2px solid ${A}`, animation: `ripple 1.8s ease-out ${i * 0.35}s infinite` }} />
       ))}
     </div>
   );
@@ -856,78 +1079,68 @@ function Particles({ count = 18 }: { count?: number }) {
 // ─── Frame 4: Process ─────────────────────────────────────────────────────────
 function ProcessFrame({ active }: { active: boolean }) {
   const [step, setStep] = useState(0);
+  const [paused, setPaused] = useState(false);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const A = "rgba(56,135,255,";
 
   useEffect(() => {
-    if (active) { setStep(0); timer.current = setInterval(() => setStep(p => (p + 1) % 3), 2800); }
-    else { if (timer.current) clearInterval(timer.current); }
+    if (active && !paused) { timer.current = setInterval(() => setStep(p => (p + 1) % STEPS.length), 2000); }
     return () => { if (timer.current) clearInterval(timer.current); };
-  }, [active]);
+  }, [active, paused]);
+  useEffect(() => { if (active) setStep(0); }, [active]);
 
-  const shapes = ["16px", "50%", "0px"];
-  const fills = [
-    "linear-gradient(135deg,rgba(168,85,247,.35),rgba(50,15,150,.55))",
-    "radial-gradient(circle,rgba(168,85,247,.75),rgba(50,15,180,.32))",
-    "linear-gradient(45deg,rgba(168,85,247,.95),rgba(220,180,255,.45))",
-  ];
-  const glows = [32, 50, 70];
+  const s = STEPS[step];
 
   return (
-    <div className="process-layout" style={{ height: "100%", display: "flex", alignItems: "center", overflow: "hidden auto", position: "relative" }}>
-      <Particles />
+    <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "clamp(80px,11vh,96px) clamp(20px,5vw,56px) clamp(40px,7vh,56px)", position: "relative", overflow: "hidden" }}
+      onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+      <Particles count={14} />
 
-      {/* Left */}
-      <div style={{ flex: "0 0 55%", padding: "clamp(80px,10vw,0px) clamp(20px,4vw,0px) 0 clamp(20px,4vw,72px)", display: "flex", flexDirection: "column", justifyContent: "center", position: "relative", zIndex: 1 }}>
-        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(168,85,247,.55)", marginBottom: "44px" }}>THE PROCESS</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "28px", marginBottom: "44px" }}>
-          {STEPS.map((s, i) => (
-            <div key={i} data-h onClick={() => setStep(i)} style={{
-              opacity: step === i ? 1 : .18,
-              transform: step === i ? "translateX(0)" : "translateX(-12px)",
-              transition: "all .55s cubic-bezier(.23,1,.32,1)", cursor: "pointer",
-            }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "5px" }}>
-                <span className="fm" style={{ fontSize: "9px", letterSpacing: ".3em", color: "rgba(168,85,247,.65)" }}>{s.num}</span>
-                <span style={{ fontSize: "16px" }}>{s.icon}</span>
-                <div style={{ flex: 1, height: "1px", background: step === i ? "rgba(168,85,247,.35)" : "transparent", transition: "background .55s ease" }} />
-              </div>
-              <h3 className="fd" style={{ fontSize: "clamp(30px,4vw,58px)", fontWeight: 900, color: "white", letterSpacing: "-.025em", lineHeight: 1, marginBottom: "6px" }}>{s.title}</h3>
-              <p className="fb" style={{ fontSize: "13px", color: "rgba(255,255,255,.45)", lineHeight: 1.65, maxWidth: "340px", fontWeight: 300 }}>{s.desc}</p>
-            </div>
-          ))}
+      {/* Label */}
+      <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: `${A}.6)`, marginBottom: "clamp(20px,4vh,40px)", position: "relative", zIndex: 1 }}>THE PROCESS</div>
+
+      {/* Stage */}
+      <div style={{ position: "relative", zIndex: 1, width: "min(760px,100%)", flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", minHeight: 0 }}>
+        {/* Ghost numeral */}
+        <div className="fd" aria-hidden style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", overflow: "hidden" }}>
+          <AnimatePresence mode="wait">
+            <motion.span key={step} initial={{ opacity: 0, scale: 1.3, filter: "blur(8px)" }} animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }} exit={{ opacity: 0, scale: 0.8 }} transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              style={{ fontSize: "clamp(180px,38vw,420px)", fontWeight: 900, color: `${A}.05)`, letterSpacing: "-.06em", lineHeight: 1 }}>
+              0{step + 1}
+            </motion.span>
+          </AnimatePresence>
         </div>
-        <div style={{ display: "flex", gap: "10px" }}>
-          {STEPS.map((_, i) => <div key={i} onClick={() => setStep(i)} data-h style={{ width: step === i ? "32px" : "6px", height: "6px", borderRadius: "3px", background: step === i ? "rgba(168,85,247,.9)" : "rgba(255,255,255,.18)", transition: "all .4s ease", cursor: "pointer" }} />)}
+
+        {/* Text + visual */}
+        <div style={{ position: "relative", textAlign: "center" }}>
+          <AnimatePresence mode="wait">
+            <motion.div key={step} initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -26 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}>
+              <div style={{ fontSize: "clamp(26px,5vw,40px)", marginBottom: "8px" }}>{s.icon}</div>
+              <div className="fm" style={{ fontSize: "9px", letterSpacing: ".34em", color: `${A}.75)`, marginBottom: "12px" }}>STEP {s.num}</div>
+              <h3 className="fd" style={{ fontSize: "clamp(40px,8vw,92px)", fontWeight: 900, color: "white", letterSpacing: "-.03em", lineHeight: .95, marginBottom: "16px" }}>{s.title}</h3>
+              <p className="fb" style={{ fontSize: "clamp(13px,1.5vw,16px)", color: "rgba(255,255,255,.5)", lineHeight: 1.7, maxWidth: "440px", margin: "0 auto", fontWeight: 300 }}>{s.desc}</p>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Animated visual band */}
+          <div style={{ height: "clamp(90px,16vh,130px)", marginTop: "clamp(20px,4vh,36px)" }}>
+            <StepVisual key={step} step={step} />
+          </div>
         </div>
       </div>
 
-      {/* Right — morphing visual */}
-      <div className="process-right" style={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", position: "relative", zIndex: 1 }}>
-        {/* Ambient */}
-        <div style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 50% 50%,rgba(168,85,247,${.06 + step * .05}),transparent 60%)`, transition: "background 1.2s ease", pointerEvents: "none" }} />
-
-        {/* Orbiting dots */}
-        {active && [0, 1, 2].map(i => (
-          <div key={i} style={{
-            position: "absolute", width: "8px", height: "8px", borderRadius: "50%",
-            background: "rgba(168,85,247,.7)", boxShadow: "0 0 12px rgba(168,85,247,.5)",
-            animation: `orbit${i === 0 ? "" : i + 1} ${6 + i * 2}s linear infinite`,
-          }} />
+      {/* Stepper progress (clickable) */}
+      <div style={{ position: "relative", zIndex: 1, display: "flex", gap: "10px", width: "min(420px,90%)", marginTop: "clamp(16px,3vh,28px)" }}>
+        {STEPS.map((st, i) => (
+          <button key={i} data-h onClick={() => setStep(i)} style={{ flex: 1, background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", flexDirection: "column", gap: "8px" }}>
+            <div style={{ height: "3px", borderRadius: "2px", background: "rgba(255,255,255,.1)", overflow: "hidden" }}>
+              <div style={{ height: "100%", borderRadius: "2px", background: `${A}1)`, boxShadow: `0 0 8px ${A}.6)`,
+                width: step === i ? "100%" : step > i ? "100%" : "0%",
+                transition: step === i && !paused ? "width 2s linear" : "width .3s ease" }} />
+            </div>
+            <span className="fm" style={{ fontSize: "8px", letterSpacing: ".18em", color: step === i ? "white" : "rgba(255,255,255,.35)", transition: "color .3s", textAlign: "left" }}>{st.num} {st.title}</span>
+          </button>
         ))}
-
-        {/* Central shape */}
-        <div style={{ position: "relative", width: "260px", height: "260px" }}>
-          <div style={{ position: "absolute", inset: 0, borderRadius: shapes[step], border: "1px solid rgba(168,85,247,.38)", transition: "border-radius 1.1s cubic-bezier(.23,1,.32,1)", animation: "float 7s ease-in-out infinite" }} />
-          <div style={{ position: "absolute", inset: "26px", borderRadius: shapes[step], border: "1px solid rgba(168,85,247,.2)", transition: "border-radius 1.1s cubic-bezier(.23,1,.32,1) .08s", animation: "floatReverse 7s ease-in-out infinite" }} />
-          <div style={{ position: "absolute", inset: "66px", borderRadius: shapes[step], background: fills[step], transition: "all 1.1s cubic-bezier(.23,1,.32,1) .16s", boxShadow: `0 0 ${glows[step]}px rgba(168,85,247,${.3 + step * .18})` }} />
-          {/* Ping rings */}
-          {active && [0, 1].map(i => <div key={i} style={{ position: "absolute", inset: 0, borderRadius: shapes[step], border: "1px solid rgba(168,85,247,.2)", animation: `ping 2.4s ease-out ${i * 1.2}s infinite`, transition: "border-radius 1.1s cubic-bezier(.23,1,.32,1)" }} />)}
-          <div className="fd" style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "78px", fontWeight: 900, color: "rgba(168,85,247,.1)", letterSpacing: "-.06em", transition: "all .55s ease" }}>
-            <AnimatePresence mode="wait">
-              <motion.span key={step} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: .4 }}>0{step + 1}</motion.span>
-            </AnimatePresence>
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -935,7 +1148,7 @@ function ProcessFrame({ active }: { active: boolean }) {
 
 // ─── Proof Visuals ────────────────────────────────────────────────────────────
 function ProofStatViz({ idx }: { idx: number }) {
-  const colors = ["rgba(168,85,247,1)", "rgba(52,211,153,1)", "rgba(96,165,250,1)", "rgba(251,146,60,1)"];
+  const colors = ["rgba(56,135,255,1)", "rgba(52,211,153,1)", "rgba(96,165,250,1)", "rgba(251,146,60,1)"];
   const c = colors[idx];
   if (idx === 0) return (
     <div style={{ display: "flex", alignItems: "flex-end", gap: "3px", height: "40px" }}>
@@ -972,13 +1185,13 @@ function ProofFrame({ active }: { active: boolean }) {
     return () => { if (timer.current) clearInterval(timer.current); };
   }, [active]);
 
-  const statColors = ["rgba(168,85,247,1)", "rgba(52,211,153,1)", "rgba(96,165,250,1)", "rgba(251,146,60,1)"];
+  const statColors = ["rgba(56,135,255,1)", "rgba(52,211,153,1)", "rgba(96,165,250,1)", "rgba(251,146,60,1)"];
 
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column", padding: "clamp(80px,10vw,88px) clamp(20px,4vw,48px) clamp(20px,4vw,44px)", justifyContent: "space-between", position: "relative" }}>
       <Particles count={12} />
       <div style={{ position: "relative", zIndex: 1 }}>
-        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(168,85,247,.65)", marginBottom: "12px" }}>THE PROOF</div>
+        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(56,135,255,.65)", marginBottom: "12px" }}>THE PROOF</div>
         <h2 className="fd" style={{ fontSize: "clamp(32px,5vw,60px)", fontWeight: 900, color: "white", lineHeight: .93, letterSpacing: "-.025em" }}>
           RESULTS THAT<br />SPEAK FOR THEMSELVES.
         </h2>
@@ -999,21 +1212,20 @@ function ProofFrame({ active }: { active: boolean }) {
       {/* Testimonial */}
       <div style={{ position: "relative", zIndex: 1 }}>
         <AnimatePresence mode="wait">
-          <motion.div key={tIdx} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={{ duration: .5, ease: [.16, 1, .3, 1] }} style={{ background: "rgba(8,8,16,.8)", border: "1px solid rgba(168,85,247,.14)", backdropFilter: "blur(20px)", padding: "28px 32px", borderRadius: "2px", position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(to right,rgba(168,85,247,.6),transparent)" }} />
-            <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: "2px", background: "linear-gradient(to bottom,rgba(168,85,247,.6),transparent)" }} />
-            <div style={{ fontSize: "32px", color: "rgba(168,85,247,.4)", lineHeight: 1, marginBottom: "12px" }}>"</div>
+          <motion.div key={tIdx} initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -24 }} transition={{ duration: .5, ease: [.16, 1, .3, 1] }} style={{ background: "rgba(8,8,16,.8)", border: "1px solid rgba(56,135,255,.14)", backdropFilter: "blur(20px)", padding: "28px 32px", borderRadius: "2px", position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(to right,rgba(56,135,255,.6),transparent)" }} />
+            <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: "2px", background: "linear-gradient(to bottom,rgba(56,135,255,.6),transparent)" }} />
+            <div style={{ fontSize: "32px", color: "rgba(56,135,255,.4)", lineHeight: 1, marginBottom: "12px" }}>"</div>
             <p className="fb" style={{ fontSize: "clamp(14px,1.4vw,18px)", color: "rgba(255,255,255,.82)", lineHeight: 1.7, fontWeight: 300, marginBottom: "20px", fontStyle: "italic" }}>
               {TESTIMONIALS[tIdx].quote}
             </p>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
-              <div className="fb" style={{ fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,.6)" }}>{TESTIMONIALS[tIdx].author}</div>
-              <div className="chip fm">{TESTIMONIALS[tIdx].result}</div>
+              <div className="fb" style={{ fontSize: "13px", fontWeight: 500, color: "rgba(255,255,255,.6)" }}>{TESTIMONIALS[tIdx].author.split(",")[0]}</div>
             </div>
           </motion.div>
         </AnimatePresence>
         <div style={{ display: "flex", gap: "8px", marginTop: "14px", justifyContent: "center" }}>
-          {TESTIMONIALS.map((_, i) => <div key={i} onClick={() => setTIdx(i)} data-h style={{ width: tIdx === i ? "24px" : "6px", height: "6px", borderRadius: "3px", background: tIdx === i ? "rgba(168,85,247,.9)" : "rgba(255,255,255,.2)", transition: "all .4s ease", cursor: "pointer" }} />)}
+          {TESTIMONIALS.map((_, i) => <div key={i} onClick={() => setTIdx(i)} data-h style={{ width: tIdx === i ? "24px" : "6px", height: "6px", borderRadius: "3px", background: tIdx === i ? "rgba(56,135,255,.9)" : "rgba(255,255,255,.2)", transition: "all .4s ease", cursor: "pointer" }} />)}
         </div>
       </div>
     </div>
@@ -1035,17 +1247,17 @@ function ContactFrame() {
       <div className="contact-layout" style={{ display: "flex", gap: "64px", flex: 1, position: "relative", zIndex: 1 }}>
         {/* Left */}
         <div style={{ flex: "0 0 auto", maxWidth: "400px" }}>
-          <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(168,85,247,.65)", marginBottom: "18px" }}>LET'S BUILD</div>
+          <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(56,135,255,.65)", marginBottom: "18px" }}>LET'S BUILD</div>
           <h2 className="fd" style={{ fontSize: "clamp(40px,6.5vw,88px)", fontWeight: 900, color: "white", lineHeight: .88, letterSpacing: "-.035em", marginBottom: "28px" }}>
             WANT TO MAKE<br />
-            <span style={{ WebkitTextStroke: "2px rgba(168,85,247,.48)", WebkitTextFillColor: "transparent" }}>THEM JEALOUS?</span>
+            <span style={{ WebkitTextStroke: "2px rgba(56,135,255,.48)", WebkitTextFillColor: "transparent" }}>THEM JEALOUS?</span>
           </h2>
           <p className="fb" style={{ fontSize: "14px", color: "rgba(255,255,255,.38)", lineHeight: 1.75, fontWeight: 300, maxWidth: "300px", marginBottom: "36px" }}>
             Tell us about your brand. We'll tell you exactly how we'll make it undeniable.
           </p>
-          {[{ l: "EMAIL", v: "hello@empires.co" }, { l: "INSTAGRAM", v: "@empires.co" }, { l: "LOCATIONS", v: "Dubai · London · NYC" }].map(c => (
+          {[{ l: "EMAIL", v: "contact@adaptdo.com" }, { l: "ADDRESS", v: "Colombo, Sri Lanka" }].map(c => (
             <div key={c.l} style={{ display: "flex", gap: "16px", alignItems: "center", marginBottom: "10px" }}>
-              <span className="fm" style={{ fontSize: "8px", letterSpacing: ".3em", color: "rgba(168,85,247,.5)", width: "72px" }}>{c.l}</span>
+              <span className="fm" style={{ fontSize: "8px", letterSpacing: ".3em", color: "rgba(56,135,255,.5)", width: "72px" }}>{c.l}</span>
               <span className="fb" style={{ fontSize: "13px", color: "rgba(255,255,255,.48)", fontWeight: 300 }}>{c.v}</span>
             </div>
           ))}
@@ -1056,33 +1268,33 @@ function ContactFrame() {
           {!done ? (
             <>
               <div style={{ display: "flex", gap: "6px", marginBottom: "36px" }}>
-                {[0, 1, 2].map(i => <div key={i} style={{ flex: 1, height: "2px", borderRadius: "1px", background: step > i ? "rgba(168,85,247,1)" : step === i ? "rgba(168,85,247,.4)" : "rgba(255,255,255,.08)", boxShadow: step > i ? "0 0 8px rgba(168,85,247,.7)" : "none", transition: "all .5s ease" }} />)}
+                {[0, 1, 2].map(i => <div key={i} style={{ flex: 1, height: "2px", borderRadius: "1px", background: step > i ? "rgba(56,135,255,1)" : step === i ? "rgba(56,135,255,.4)" : "rgba(255,255,255,.08)", boxShadow: step > i ? "0 0 8px rgba(56,135,255,.7)" : "none", transition: "all .5s ease" }} />)}
               </div>
               <AnimatePresence mode="wait">
                 {step === 0 && (
                   <motion.div key="s0" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: .4 }}>
-                    <div className="fm" style={{ fontSize: "9px", letterSpacing: ".38em", color: "rgba(168,85,247,.65)", marginBottom: "14px" }}>01 / BRAND NAME</div>
+                    <div className="fm" style={{ fontSize: "9px", letterSpacing: ".38em", color: "rgba(56,135,255,.65)", marginBottom: "14px" }}>01 / BRAND NAME</div>
                     <input className="underline-input fd" style={{ fontSize: "clamp(20px,2.8vw,36px)" }} placeholder="Your Brand Name" value={brand} onChange={e => setBrand(e.target.value)} onKeyDown={e => e.key === "Enter" && brand.trim() && setStep(1)} autoFocus />
-                    <button data-h onClick={() => brand.trim() && setStep(1)} className="fb" style={{ marginTop: "22px", fontSize: "10px", letterSpacing: ".28em", color: brand.trim() ? "rgba(168,85,247,.9)" : "rgba(255,255,255,.2)", background: "none", border: "none", transition: "color .3s", fontWeight: 500 }}>CONTINUE →</button>
+                    <button data-h onClick={() => brand.trim() && setStep(1)} className="fb" style={{ marginTop: "22px", fontSize: "10px", letterSpacing: ".28em", color: brand.trim() ? "rgba(56,135,255,.9)" : "rgba(255,255,255,.2)", background: "none", border: "none", transition: "color .3s", fontWeight: 500 }}>CONTINUE →</button>
                   </motion.div>
                 )}
                 {step === 1 && (
                   <motion.div key="s1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: .4 }}>
-                    <div className="fm" style={{ fontSize: "9px", letterSpacing: ".38em", color: "rgba(168,85,247,.65)", marginBottom: "14px" }}>02 / WHAT DO YOU NEED?</div>
+                    <div className="fm" style={{ fontSize: "9px", letterSpacing: ".38em", color: "rgba(56,135,255,.65)", marginBottom: "14px" }}>02 / WHAT DO YOU NEED?</div>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "24px" }}>
                       {CHIPS_CONTACT.map(c => {
                         const on = picks.includes(c);
-                        return <button key={c} data-h onClick={() => toggle(c)} className="fb" style={{ fontSize: "11px", letterSpacing: ".08em", color: on ? "white" : "rgba(255,255,255,.42)", background: on ? "rgba(168,85,247,.18)" : "transparent", border: `1px solid ${on ? "rgba(168,85,247,.75)" : "rgba(255,255,255,.14)"}`, padding: "10px 18px", boxShadow: on ? "0 0 18px rgba(168,85,247,.2)" : "none", transition: "all .3s", fontWeight: 500 }}>{c}</button>;
+                        return <button key={c} data-h onClick={() => toggle(c)} className="fb" style={{ fontSize: "11px", letterSpacing: ".08em", color: on ? "white" : "rgba(255,255,255,.42)", background: on ? "rgba(56,135,255,.18)" : "transparent", border: `1px solid ${on ? "rgba(56,135,255,.75)" : "rgba(255,255,255,.14)"}`, padding: "10px 18px", boxShadow: on ? "0 0 18px rgba(56,135,255,.2)" : "none", transition: "all .3s", fontWeight: 500 }}>{c}</button>;
                       })}
                     </div>
-                    <button data-h onClick={() => picks.length && setStep(2)} className="fb" style={{ fontSize: "10px", letterSpacing: ".28em", color: picks.length ? "rgba(168,85,247,.9)" : "rgba(255,255,255,.2)", background: "none", border: "none", transition: "color .3s", fontWeight: 500 }}>CONTINUE →</button>
+                    <button data-h onClick={() => picks.length && setStep(2)} className="fb" style={{ fontSize: "10px", letterSpacing: ".28em", color: picks.length ? "rgba(56,135,255,.9)" : "rgba(255,255,255,.2)", background: "none", border: "none", transition: "color .3s", fontWeight: 500 }}>CONTINUE →</button>
                   </motion.div>
                 )}
                 {step === 2 && (
                   <motion.div key="s2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: .4 }}>
-                    <div className="fm" style={{ fontSize: "9px", letterSpacing: ".38em", color: "rgba(168,85,247,.65)", marginBottom: "14px" }}>03 / YOUR EMAIL</div>
+                    <div className="fm" style={{ fontSize: "9px", letterSpacing: ".38em", color: "rgba(56,135,255,.65)", marginBottom: "14px" }}>03 / YOUR EMAIL</div>
                     <input className="underline-input fd" type="email" style={{ fontSize: "clamp(18px,2.4vw,30px)", marginBottom: "24px", display: "block" }} placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => e.key === "Enter" && email.trim() && setDone(true)} autoFocus />
-                    <button data-h className="cta-glow fd" onClick={() => email.trim() && setDone(true)} style={{ fontSize: "11px", letterSpacing: ".22em", color: "white", background: "rgba(168,85,247,.12)", border: "1px solid rgba(168,85,247,.6)", padding: "16px 40px", fontWeight: 700 }}>LAUNCH →</button>
+                    <button data-h className="cta-glow fd" onClick={() => email.trim() && setDone(true)} style={{ fontSize: "11px", letterSpacing: ".22em", color: "white", background: "rgba(56,135,255,.12)", border: "1px solid rgba(56,135,255,.6)", padding: "16px 40px", fontWeight: 700 }}>LAUNCH →</button>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -1091,18 +1303,241 @@ function ContactFrame() {
             <motion.div initial={{ opacity: 0, scale: .94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .6, ease: [.16, 1, .3, 1] }}>
               <div style={{ fontSize: "44px", marginBottom: "18px" }}>⚡</div>
               <h3 className="fd" style={{ fontSize: "clamp(26px,3.5vw,44px)", fontWeight: 900, color: "white", marginBottom: "12px", letterSpacing: "-.02em" }}>We'll be in touch.</h3>
-              <p className="fb" style={{ fontSize: "15px", color: "rgba(255,255,255,.4)", lineHeight: 1.7, fontWeight: 300 }}>Get ready, <span style={{ color: "rgba(168,85,247,.9)", fontWeight: 600 }}>{brand}</span>. We're about to change everything.</p>
+              <p className="fb" style={{ fontSize: "15px", color: "rgba(255,255,255,.4)", lineHeight: 1.7, fontWeight: 300 }}>Get ready, <span style={{ color: "rgba(56,135,255,.9)", fontWeight: 600 }}>{brand}</span>. We're about to change everything.</p>
             </motion.div>
           )}
         </div>
       </div>
 
       {/* Footer */}
-      <div style={{ marginTop: "32px", paddingTop: "20px", borderTop: "1px solid rgba(255,255,255,.05)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "14px", position: "relative", zIndex: 1 }}>
+      <div className="contact-footer" style={{ marginTop: "auto", paddingTop: "24px", borderTop: "1px solid rgba(255,255,255,.05)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "14px", position: "relative", zIndex: 1 }}>
         <span className="fd" style={{ fontSize: "17px", fontWeight: 900, color: "white", letterSpacing: "-.02em" }}>ADAPT</span>
-        <p className="fb" style={{ fontSize: "11px", color: "rgba(255,255,255,.24)", lineHeight: 1.6, maxWidth: "400px", textAlign: "center", fontWeight: 300 }}>⚡ Yeah, we designed and built this entire experience. Want yours this premium? You know what to do.</p>
-        <span className="fm" style={{ fontSize: "9px", color: "rgba(255,255,255,.18)", letterSpacing: ".22em" }}>© 2025 ADAPT.CO</span>
+        <p className="fb cf-tag" style={{ fontSize: "11px", color: "rgba(255,255,255,.24)", lineHeight: 1.6, maxWidth: "400px", textAlign: "center", fontWeight: 300 }}>⚡ Yeah, we designed and built this entire experience. Want yours this premium? You know what to do.</p>
+        <span className="fm" style={{ fontSize: "9px", color: "rgba(255,255,255,.18)", letterSpacing: ".22em" }}>© 2026 ADAPT.CO</span>
       </div>
+    </div>
+  );
+}
+
+// ─── Frame 2: Content Pillars (editorial grid, hover-reveal) ──────────────────
+function PillarTile({ p, active, idx }: { p: typeof PILLARS[0]; active: boolean; idx: number }) {
+  const [hov, setHov] = useState(false);
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 36, filter: "blur(6px)" }}
+      animate={active ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, y: 36, filter: "blur(6px)" }}
+      transition={{ duration: 0.7, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+      className="pillar-card" data-h
+      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+      style={{ position: "relative", height: "100%", minHeight: "150px", borderRadius: "5px", border: `1px solid ${p.accent}2e`, background: p.grad, overflow: "hidden", cursor: "pointer" }}
+    >
+      {/* media glow */}
+      <div className="pc-media" style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 50% 25%, ${p.accent}2e, transparent 62%)` }} />
+      {/* number */}
+      <div className="fm" style={{ position: "absolute", top: "16px", left: "18px", fontSize: "10px", letterSpacing: ".3em", color: p.accent, zIndex: 2 }}>{p.num}</div>
+      <div className="fm pc-cta" style={{ position: "absolute", top: "16px", right: "18px", fontSize: "8px", letterSpacing: ".2em", color: "white", border: `1px solid ${p.accent}`, padding: "5px 10px", zIndex: 2 }}>DETAIL</div>
+
+      {/* base title */}
+      <div style={{ position: "absolute", left: "18px", right: "18px", bottom: "18px", zIndex: 1 }}>
+        <div className="fs" style={{ fontSize: "11px", color: p.accent, fontStyle: "italic", marginBottom: "6px", opacity: hov ? 0 : 1, transition: "opacity .3s" }}>{p.tagline}</div>
+        <h3 className="fs" style={{ fontSize: "clamp(19px,1.9vw,26px)", fontWeight: 400, color: "white", lineHeight: 1.05, letterSpacing: "-.01em" }}>{p.title}</h3>
+      </div>
+
+      {/* hover-reveal detail */}
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 3,
+        background: "linear-gradient(to top, rgba(8,5,3,.96) 30%, rgba(8,5,3,.7) 70%, transparent)",
+        display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "20px 18px",
+        opacity: hov ? 1 : 0, transform: hov ? "translateY(0)" : "translateY(14px)",
+        transition: "opacity .45s ease, transform .45s cubic-bezier(.23,1,.32,1)", pointerEvents: "none",
+      }}>
+        <h3 className="fs" style={{ fontSize: "clamp(18px,1.8vw,24px)", fontWeight: 400, color: "white", marginBottom: "12px", letterSpacing: "-.01em" }}>{p.title}</h3>
+        <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "14px" }}>
+          {p.deep.deliverables.map((d, i) => (
+            <div key={d} className="fb" style={{ fontSize: "11.5px", color: "rgba(255,255,255,.72)", display: "flex", gap: "9px", alignItems: "center", transform: hov ? "translateX(0)" : "translateX(-8px)", opacity: hov ? 1 : 0, transition: `all .4s ease ${0.06 * i + 0.1}s` }}>
+              <span style={{ width: "4px", height: "4px", borderRadius: "50%", background: p.accent, flexShrink: 0 }} />{d}
+            </div>
+          ))}
+        </div>
+        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".06em", color: p.accent, lineHeight: 1.5 }}>↳ {p.deep.outcome}</div>
+      </div>
+    </motion.div>
+  );
+}
+
+function PillarsFrame({ active }: { active: boolean }) {
+  const mobile = useMobile();
+  const header = (
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "18px", flexWrap: "wrap", gap: "12px", flexShrink: 0 }}>
+      <div>
+        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "#e8c9a8", marginBottom: "10px" }}>THE CREATIVE FLOOR</div>
+        <h2 className="fs" style={{ fontSize: "clamp(32px,5.2vw,68px)", fontWeight: 400, color: "white", lineHeight: .96, letterSpacing: "-.01em" }}>Content Pillars</h2>
+      </div>
+      {!mobile && <p className="fb" style={{ fontSize: "12px", color: "rgba(255,255,255,.32)", maxWidth: "210px", lineHeight: 1.8, textAlign: "right", fontWeight: 300 }}>Editorial, high-fashion content that makes your brand impossible to scroll past. <span style={{ color: "#e8c9a8" }}>Hover to look inside.</span></p>}
+    </div>
+  );
+
+  if (mobile) {
+    return (
+      <div style={{ height: "100%", display: "flex", flexDirection: "column", padding: "80px 20px 16px" }}>
+        {header}
+        <MobileCarousel items={PILLARS} perSlide={2} autoInterval={4000}
+          renderItem={(p, i) => <div style={{ height: "100%" }}><PillarTile p={p} active={active} idx={i % 2} /></div>} />
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ height: "100%", display: "flex", flexDirection: "column", padding: "88px 48px 32px" }}>
+      {header}
+      <div style={{ flex: 1, display: "grid", gridTemplateColumns: "repeat(3,1fr)", gridTemplateRows: "repeat(2,1fr)", gap: "10px", minHeight: 0 }}>
+        {PILLARS.map((p, i) => <PillarTile key={p.id} p={p} active={active} idx={i} />)}
+      </div>
+    </div>
+  );
+}
+
+// ─── Frame 3: Marketing Solutions (interactive index) ─────────────────────────
+function SolutionsFrame({ active }: { active: boolean }) {
+  const mobile = useMobile();
+  const [sel, setSel] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const accent = "#8b9fe8";
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    if (active && !paused && !mobile) {
+      timer.current = setInterval(() => setSel(p => (p + 1) % SOLUTIONS.length), 3600);
+    }
+    return () => { if (timer.current) clearInterval(timer.current); };
+  }, [active, paused, mobile]);
+
+  const header = (
+    <div style={{ marginBottom: "18px", flexShrink: 0 }}>
+      <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: accent, marginBottom: "10px" }}>THE STRATEGY ROOM</div>
+      <h2 className="fd" style={{ fontSize: "clamp(32px,5.2vw,68px)", fontWeight: 900, color: "white", lineHeight: .94, letterSpacing: "-.03em" }}>Marketing Solutions</h2>
+    </div>
+  );
+
+  if (mobile) {
+    return (
+      <div style={{ height: "100%", display: "flex", flexDirection: "column", padding: "80px 20px 16px" }}>
+        {header}
+        <MobileCarousel items={SOLUTIONS} perSlide={2} autoInterval={4200}
+          renderItem={(s) => (
+            <div style={{ height: "100%", background: s.flagship ? "linear-gradient(135deg,rgba(139,159,232,.16),rgba(20,28,60,.5))" : "rgba(255,255,255,.025)", border: `1px solid ${s.flagship ? accent + "80" : "rgba(255,255,255,.08)"}`, borderRadius: "5px", padding: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span className="fm" style={{ fontSize: "9px", letterSpacing: ".3em", color: accent }}>{s.num}</span>
+                <span className="fm" style={{ fontSize: "8px", letterSpacing: ".2em", color: s.flagship ? accent : "rgba(255,255,255,.3)" }}>{s.cat}{s.flagship ? " ★" : ""}</span>
+              </div>
+              <h3 className="fd" style={{ fontSize: "17px", fontWeight: 800, color: "white", lineHeight: 1.1, letterSpacing: "-.02em" }}>{s.title}</h3>
+              <p className="fb" style={{ fontSize: "12.5px", color: "rgba(255,255,255,.5)", lineHeight: 1.55, fontWeight: 300 }}>{s.desc}</p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "auto" }}>
+                {(s.flagship ? s.phases.map((ph: any) => ph.label) : s.deliverables).slice(0, 4).map((d: string) => (
+                  <span key={d} className="fm" style={{ fontSize: "8px", letterSpacing: ".08em", color: "rgba(255,255,255,.6)", border: "1px solid rgba(255,255,255,.1)", padding: "4px 8px", borderRadius: "2px" }}>{d}</span>
+                ))}
+              </div>
+            </div>
+          )} />
+      </div>
+    );
+  }
+
+  const s = SOLUTIONS[sel];
+  return (
+    <div style={{ height: "100%", display: "flex", flexDirection: "column", padding: "88px 48px 32px" }}>
+      {header}
+      <div style={{ flex: 1, display: "flex", gap: "20px", minHeight: 0 }}>
+        {/* Index list */}
+        <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
+          style={{ flex: "0 0 38%", display: "flex", flexDirection: "column", gap: "1px", overflow: "hidden auto" }}>
+          {SOLUTIONS.map((it, i) => {
+            const on = sel === i;
+            return (
+              <button key={it.id} data-h onMouseEnter={() => setSel(i)} onClick={() => setSel(i)}
+                style={{ textAlign: "left", background: on ? `${accent}14` : "transparent", border: "none", borderLeft: `2px solid ${on ? accent : "transparent"}`, padding: "12px 16px", display: "flex", alignItems: "center", gap: "14px", cursor: "pointer", transition: "background .3s, border-color .3s" }}>
+                <span className="fm" style={{ fontSize: "9px", letterSpacing: ".2em", color: on ? accent : "rgba(255,255,255,.3)", transition: "color .3s" }}>{it.num}</span>
+                <span className="fd" style={{ fontSize: "clamp(14px,1.3vw,17px)", fontWeight: on ? 800 : 500, color: on ? "white" : "rgba(255,255,255,.45)", letterSpacing: "-.01em", transition: "all .3s", display: "flex", alignItems: "center", gap: "8px" }}>
+                  {it.title}{it.flagship && <span style={{ fontSize: "9px", color: accent }}>★</span>}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Detail panel */}
+        <div style={{ flex: 1, background: "rgba(255,255,255,.025)", border: `1px solid ${accent}26`, borderRadius: "6px", padding: "28px 30px", position: "relative", overflow: "hidden auto" }}>
+          <div style={{ position: "absolute", top: 0, right: 0, width: "180px", height: "180px", background: `radial-gradient(circle at 100% 0%, ${accent}1f, transparent 65%)`, pointerEvents: "none" }} />
+          <AnimatePresence mode="wait">
+            <motion.div key={sel} initial={{ opacity: 0, x: 26 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -26 }} transition={{ duration: .45, ease: [.16, 1, .3, 1] }} style={{ position: "relative" }}>
+              <div className="fm" style={{ fontSize: "9px", letterSpacing: ".3em", color: accent, marginBottom: "12px" }}>{s.num} · {s.cat}</div>
+              <h3 className="fd" style={{ fontSize: "clamp(26px,3vw,40px)", fontWeight: 900, color: "white", lineHeight: 1.02, letterSpacing: "-.03em", marginBottom: "12px" }}>{s.title}</h3>
+              <p className="fb" style={{ fontSize: "15px", color: "rgba(255,255,255,.55)", lineHeight: 1.6, fontWeight: 300, marginBottom: "24px", maxWidth: "520px" }}>{s.desc}</p>
+
+              {s.flagship ? (
+                <FlagshipTimeline phases={s.phases} accent={accent} />
+              ) : (
+                <>
+                  <div className="fm" style={{ fontSize: "9px", letterSpacing: ".3em", color: "rgba(255,255,255,.4)", marginBottom: "14px" }}>WHAT YOU GET</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "8px", marginBottom: "24px" }}>
+                    {s.deliverables.map((d, i) => (
+                      <motion.div key={d} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 * i, duration: .4 }}
+                        style={{ background: "rgba(0,0,0,.25)", border: "1px solid rgba(255,255,255,.06)", borderRadius: "4px", padding: "12px 14px", display: "flex", gap: "12px", alignItems: "flex-start" }}>
+                        <span className="fm" style={{ color: accent, fontSize: "10px", marginTop: "1px" }}>{String(i + 1).padStart(2, "0")}</span>
+                        <span className="fb" style={{ fontSize: "13px", color: "rgba(255,255,255,.8)", fontWeight: 300 }}>{d}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                  <div style={{ borderLeft: `2px solid ${accent}`, paddingLeft: "16px" }}>
+                    <div className="fm" style={{ fontSize: "8px", letterSpacing: ".3em", color: accent, marginBottom: "6px" }}>THE OUTCOME</div>
+                    <p className="fd" style={{ fontSize: "clamp(16px,1.8vw,22px)", color: "white", fontWeight: 700, lineHeight: 1.3, letterSpacing: "-.01em" }}>{s.outcome}</p>
+                  </div>
+                </>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Flagship Phase Timeline ──────────────────────────────────────────────────
+function FlagshipTimeline({ phases, accent }: { phases: any[]; accent: string }) {
+  const [active, setActive] = useState(0);
+  return (
+    <div style={{ marginTop: "8px" }}>
+      {/* Node track */}
+      <div style={{ position: "relative", marginBottom: "20px" }}>
+        <div style={{ position: "absolute", top: "9px", left: "4%", right: "4%", height: "2px", background: "rgba(255,255,255,.08)" }} />
+        <div style={{ position: "absolute", top: "9px", left: "4%", height: "2px", width: `${(active / (phases.length - 1)) * 92}%`, background: accent, boxShadow: `0 0 10px ${accent}`, transition: "width .45s cubic-bezier(.23,1,.32,1)" }} />
+        <div style={{ display: "flex", justifyContent: "space-between", position: "relative" }}>
+          {phases.map((p, i) => (
+            <button key={p.key} data-h onClick={() => setActive(i)} style={{ background: "none", border: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: "9px", flex: 1, cursor: "pointer" }}>
+              <span style={{ width: i <= active ? "20px" : "15px", height: i <= active ? "20px" : "15px", borderRadius: "50%", background: i <= active ? accent : "rgba(255,255,255,.12)", border: `2px solid ${i <= active ? accent : "rgba(255,255,255,.2)"}`, boxShadow: i === active ? `0 0 16px ${accent}` : "none", transition: "all .4s ease", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "8px", color: "#0a0a12", fontWeight: 900 }}>{i < active ? "✓" : ""}</span>
+              <span className="fm" style={{ fontSize: "7.5px", letterSpacing: ".1em", color: i === active ? "white" : "rgba(255,255,255,.4)", textAlign: "center", transition: "color .4s", maxWidth: "80px", lineHeight: 1.4 }}>{p.label.toUpperCase()}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      {/* Active phase detail */}
+      <AnimatePresence mode="wait">
+        <motion.div key={active} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: .35, ease: [.16, 1, .3, 1] }}
+          style={{ background: "rgba(255,255,255,.03)", border: `1px solid ${accent}30`, borderRadius: "4px", padding: "16px 18px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "8px" }}>
+            <h4 className="fd" style={{ fontSize: "clamp(18px,2.2vw,26px)", fontWeight: 800, color: "white", letterSpacing: "-.02em" }}>{phases[active].label}</h4>
+            <span className="fm" style={{ fontSize: "8px", letterSpacing: ".24em", color: accent }}>{active + 1}/{phases.length}</span>
+          </div>
+          <p className="fb" style={{ fontSize: "12.5px", color: "rgba(255,255,255,.5)", marginBottom: "14px", fontWeight: 300 }}>{phases[active].desc}</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "7px" }}>
+            {phases[active].points.map((pt: string, i: number) => (
+              <div key={pt} className="fb" style={{ fontSize: "11.5px", color: "rgba(255,255,255,.74)", display: "flex", gap: "9px", alignItems: "flex-start", background: "rgba(0,0,0,.25)", padding: "9px 11px", borderRadius: "3px", border: "1px solid rgba(255,255,255,.05)" }}>
+                <span className="fm" style={{ color: accent, fontSize: "9px", marginTop: "1px" }}>{String(i + 1).padStart(2, "0")}</span>{pt}
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
@@ -1113,7 +1548,7 @@ const frameVariants = {
   center: { y: 0, opacity: 1, scale: 1 },
   exit:  (dir: number) => ({ y: dir > 0 ? "-100vh" : "100vh", opacity: 0, scale: 0.98 }),
 };
-const frameTrans = { duration: 0.75, ease: [0.65, 0, 0.35, 1] };
+const frameTrans = { duration: 0.5, ease: [0.65, 0, 0.35, 1] };
 
 // ─── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
@@ -1126,7 +1561,7 @@ export default function App() {
     lock.current = true;
     setDir(i > frame ? 1 : -1);
     setFrame(i);
-    setTimeout(() => { lock.current = false; }, 900);
+    setTimeout(() => { lock.current = false; }, 560);
   }, [frame]);
 
   const goNext = useCallback(() => goTo(frame + 1), [frame, goTo]);
@@ -1166,10 +1601,11 @@ export default function App() {
   const frames = [
     <HeroFrame onNext={goNext} />,
     <ManifestoFrame active={frame === 1} />,
-    <CapabilitiesFrame active={frame === 2} />,
-    <WorkFrame active={frame === 3} />,
-    <ProcessFrame active={frame === 4} />,
-    <ProofFrame active={frame === 5} />,
+    <PillarsFrame active={frame === 2} />,
+    <SolutionsFrame active={frame === 3} />,
+    <WorkFrame active={frame === 4} />,
+    <ProcessFrame active={frame === 5} />,
+    <ProofFrame active={frame === 6} />,
     <ContactFrame />,
   ];
 
@@ -1210,7 +1646,7 @@ export default function App() {
 
       {/* Progress bar */}
       <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100, height: "2px", background: "rgba(255,255,255,.04)" }}>
-        <motion.div animate={{ width: `${((frame + 1) / FRAME_NAMES.length) * 100}%` }} transition={frameTrans} style={{ height: "100%", background: "linear-gradient(to right,rgba(168,85,247,.5),rgba(168,85,247,1))", boxShadow: "0 0 8px rgba(168,85,247,.5)" }} />
+        <motion.div animate={{ width: `${((frame + 1) / FRAME_NAMES.length) * 100}%` }} transition={frameTrans} style={{ height: "100%", background: "linear-gradient(to right,rgba(56,135,255,.5),rgba(56,135,255,1))", boxShadow: "0 0 8px rgba(56,135,255,.5)" }} />
       </div>
 
       {/* Mobile swipe hint */}
@@ -1218,7 +1654,7 @@ export default function App() {
         {frame === 0 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ delay: 3 }} className="mob-show" style={{ position: "fixed", bottom: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 99, flexDirection: "column", alignItems: "center", gap: "6px" }}>
             <span className="fm" style={{ fontSize: "8px", letterSpacing: ".36em", color: "rgba(255,255,255,.25)" }}>SWIPE UP</span>
-            <div style={{ width: "1px", height: "28px", background: "rgba(168,85,247,.5)", animation: "slideBar 2s ease-in-out infinite" }} />
+            <div style={{ width: "1px", height: "28px", background: "rgba(56,135,255,.5)", animation: "slideBar 2s ease-in-out infinite" }} />
           </motion.div>
         )}
       </AnimatePresence>
