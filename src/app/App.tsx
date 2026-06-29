@@ -382,7 +382,7 @@ const PROJECTS = [
 
 const STEPS = [
   { num: "01", title: "ARCHITECT", icon: "◈", desc: "We dissect your market, audit the competition, and build a custom growth blueprint before a single pixel is placed." },
-  { num: "02", title: "EXECUTE",   icon: "⚡", desc: "Studios ignite. Code is written. Visuals are shot. Campaigns are structured. Every arm of ADAPT fires simultaneously." },
+  { num: "02", title: "EXECUTE",   icon: "◇", desc: "Studios ignite. Code is written. Visuals are shot. Campaigns are structured. Every arm of ADAPT fires simultaneously." },
   { num: "03", title: "DOMINATE",  icon: "◆", desc: "We launch across all fronts — digital screens to physical streets — and iterate relentlessly until market dominance is yours." },
 ];
 
@@ -488,7 +488,7 @@ function NavBar({ frame, goTo }: { frame: number; goTo: (i: number) => void }) {
             {[0, 1, 2].map(i => <div key={i} style={{ width: "22px", height: "1.5px", background: "white" }} />)}
           </button>
         </div>
-        <div className="fm desktop-only" style={{ position: "absolute", bottom: "-28px", left: "50%", transform: "translateX(-50%)", fontSize: "9px", letterSpacing: ".4em", color: "rgba(56,135,255,.4)" }}>
+        <div className="fm desktop-only" style={{ position: "absolute", bottom: "-28px", left: "50%", transform: "translateX(-50%)", fontSize: "11px", letterSpacing: ".4em", color: "rgba(130,180,255,.7)" }}>
           {String(frame + 1).padStart(2, "0")} / {FRAME_NAMES.length.toString().padStart(2, "0")} — {FRAME_NAMES[frame]}
         </div>
       </nav>
@@ -538,7 +538,7 @@ function HeroFrame({ onNext }: { onNext: () => void }) {
       <div className="desktop-only" style={{ position: "absolute", width: "340px", height: "340px", borderRadius: "50%", border: "1px solid rgba(56,135,255,.04)", animation: "spinSlowRev 28s linear infinite", pointerEvents: "none" }} />
 
       <motion.div initial={{ opacity: 0, y: 48 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(56,135,255,.7)", marginBottom: "32px" }}>◆ ALL-IN-ONE EXECUTION SQUAD ◆</div>
+        <div className="fm" style={{ fontSize: "15px", letterSpacing: ".26em", color: "rgba(140,185,255,1)", marginBottom: "32px" }}>◆ ALL-IN-ONE EXECUTION SQUAD ◆</div>
         <h1 className="fd" style={{ fontSize: "clamp(60px,14vw,200px)", fontWeight: 900, lineHeight: .87, letterSpacing: "-.035em", color: "white", marginBottom: "36px" }}>
           WE BUILD<br />
           <span style={{ WebkitTextStroke: "2px rgba(56,135,255,.55)", WebkitTextFillColor: "transparent", display: "inline-block" }}>ADAPT.</span>
@@ -550,7 +550,7 @@ function HeroFrame({ onNext }: { onNext: () => void }) {
       </motion.div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5, duration: 1 }} style={{ position: "absolute", bottom: "36px", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
-        <span className="fm" style={{ fontSize: "8px", letterSpacing: ".38em", color: "rgba(255,255,255,.22)" }}>SCROLL</span>
+        <span className="fm" style={{ fontSize: "10px", letterSpacing: ".38em", color: "rgba(255,255,255,.22)" }}>SCROLL</span>
         <div style={{ width: "1px", height: "52px", background: "rgba(56,135,255,.5)", animation: "slideBar 2s ease-in-out infinite" }} />
       </motion.div>
     </div>
@@ -568,7 +568,7 @@ function ManifestoFrame({ active }: { active: boolean }) {
   }, [active]);
   return (
     <div style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 52px", position: "relative" }}>
-      <div className="fm" style={{ position: "absolute", top: "88px", left: "52px", fontSize: "9px", letterSpacing: ".4em", color: "rgba(56,135,255,.45)" }}>THE MANIFESTO</div>
+      <div className="fm" style={{ position: "absolute", top: "88px", left: "52px", fontSize: "15px", letterSpacing: ".26em", color: "rgba(140,185,255,1)" }}>THE MANIFESTO</div>
       <div style={{ position: "absolute", left: "52px", top: "50%", transform: "translateY(-50%)", width: "2px", height: "120px", background: "linear-gradient(to bottom,transparent,rgba(56,135,255,.6),transparent)" }} />
       <div style={{ maxWidth: "900px" }}>
         <p className="fd" style={{ fontSize: "clamp(24px,3.5vw,50px)", fontWeight: 800, lineHeight: 1.45, letterSpacing: "-.01em" }}>
@@ -613,7 +613,7 @@ function SocialViz({ active }: { active: boolean }) {
         }}>
           <span style={{ fontSize: "11px", color: "rgba(96,165,250,.8)" }}>{it.emoji}</span>
           <span className="fd" style={{ fontSize: "13px", fontWeight: 800, color: "white", lineHeight: 1 }}>{it.val}</span>
-          <span className="fm" style={{ fontSize: "7px", color: "rgba(96,165,250,.6)", letterSpacing: ".1em" }}>{it.change}</span>
+          <span className="fm" style={{ fontSize: "9px", color: "rgba(96,165,250,.6)", letterSpacing: ".1em" }}>{it.change}</span>
         </div>
       ))}
     </div>
@@ -641,7 +641,7 @@ function DigitalViz({ active }: { active: boolean }) {
   return (
     <div style={{ height: "72px", background: "rgba(0,0,0,.6)", borderRadius: "4px", border: "1px solid rgba(52,211,153,.2)", padding: "8px 10px", overflow: "hidden", position: "relative" }}>
       {lines.map((l, i) => (
-        <div key={i} className="fm" style={{ fontSize: "9px", color: l.c, marginBottom: "4px", letterSpacing: ".03em", opacity: active ? 1 : 0, transform: active ? "none" : `translateY(${i * 4}px)`, transition: `all 0.35s ease ${i * 0.1}s` }}>{l.t}</div>
+        <div key={i} className="fm" style={{ fontSize: "11px", color: l.c, marginBottom: "4px", letterSpacing: ".03em", opacity: active ? 1 : 0, transform: active ? "none" : `translateY(${i * 4}px)`, transition: `all 0.35s ease ${i * 0.1}s` }}>{l.t}</div>
       ))}
       <div style={{ position: "absolute", left: 0, right: 0, height: "1px", background: "rgba(52,211,153,.4)", animation: active ? "scanUp 2.5s linear infinite" : "none", opacity: active ? 1 : 0 }} />
     </div>
@@ -756,12 +756,12 @@ function CapCard({ c, active, hov, onHov }: { c: typeof CAPS[0]; active: boolean
     >
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(to right,${c.accent},transparent)`, opacity: hov ? 1 : 0.5, transition: "opacity .4s" }} />
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span className="fm" style={{ fontSize: "9px", letterSpacing: ".3em", color: c.accent, opacity: .7 }}>{c.num}</span>
+        <span className="fm" style={{ fontSize: "11px", letterSpacing: ".3em", color: c.accent, opacity: .7 }}>{c.num}</span>
         <span style={{ fontSize: "18px", color: c.accent, opacity: hov ? 1 : .4, transition: "opacity .4s, transform .4s", transform: hov ? "scale(1.2)" : "scale(1)" }}>{c.icon}</span>
       </div>
       <Viz active={active} />
       <div>
-        <div className="fm" style={{ fontSize: "8px", letterSpacing: ".22em", color: c.accent, opacity: .6, marginBottom: "6px" }}>{c.cat}</div>
+        <div className="fm" style={{ fontSize: "10px", letterSpacing: ".22em", color: c.accent, opacity: .6, marginBottom: "6px" }}>{c.cat}</div>
         <h3 className="fd" style={{ fontSize: "clamp(17px,1.7vw,21px)", fontWeight: 800, color: "white", lineHeight: 1.1, marginBottom: "8px", letterSpacing: "-.01em" }}>{c.title}</h3>
         <p className="fb" style={{ fontSize: "13px", color: "rgba(255,255,255,.42)", lineHeight: 1.65, fontWeight: 300 }}>{c.copy}</p>
       </div>
@@ -777,7 +777,7 @@ function CapabilitiesFrame({ active }: { active: boolean }) {
   const header = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "20px", flexWrap: "wrap", gap: "12px", flexShrink: 0 }}>
       <div>
-        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(56,135,255,.65)", marginBottom: "10px" }}>CAPABILITIES</div>
+        <div className="fm" style={{ fontSize: "15px", letterSpacing: ".26em", color: "rgba(140,185,255,1)", marginBottom: "10px" }}>CAPABILITIES</div>
         <h2 className="fd" style={{ fontSize: "clamp(30px,5vw,64px)", fontWeight: 900, color: "white", lineHeight: .93, letterSpacing: "-.025em" }}>
           EVERY WEAPON.<br />ONE ARSENAL.
         </h2>
@@ -839,7 +839,7 @@ function CodeViz({ accent }: { accent: string }) {
   return (
     <div style={{ background: "rgba(0,0,0,.5)", borderRadius: "4px", padding: "8px 10px", border: `1px solid ${accent}30`, height: "64px", overflow: "hidden" }}>
       {lines.map((l, i) => (
-        <div key={i} className="fm" style={{ fontSize: "8px", color: l.highlight ? accent : "rgba(255,255,255,.35)", letterSpacing: ".03em", marginBottom: "3px", animation: `fadeUp 0.4s ease ${i * 0.1}s both`, width: l.w }}>{l.t}</div>
+        <div key={i} className="fm" style={{ fontSize: "10px", color: l.highlight ? accent : "rgba(255,255,255,.35)", letterSpacing: ".03em", marginBottom: "3px", animation: `fadeUp 0.4s ease ${i * 0.1}s both`, width: l.w }}>{l.t}</div>
       ))}
     </div>
   );
@@ -927,18 +927,18 @@ function WorkCard({ p, hov, onHov }: { p: typeof PROJECTS[0]; hov: boolean; onHo
     >
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(to right,${p.accent},transparent)` }} />
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-        <span className="fm" style={{ fontSize: "9px", letterSpacing: ".3em", color: p.accent, opacity: .7 }}>{p.id}</span>
-        <span className="fm" style={{ fontSize: "7px", letterSpacing: ".16em", color: p.accent, opacity: .6, border: `1px solid ${p.accent}40`, padding: "3px 8px" }}>{p.sector}</span>
+        <span className="fm" style={{ fontSize: "11px", letterSpacing: ".3em", color: p.accent, opacity: .7 }}>{p.id}</span>
+        <span className="fm" style={{ fontSize: "9px", letterSpacing: ".16em", color: p.accent, opacity: .6, border: `1px solid ${p.accent}40`, padding: "3px 8px" }}>{p.sector}</span>
       </div>
       {vizMap[p.type]()}
       <div>
-        <div className="fm" style={{ fontSize: "7px", letterSpacing: ".2em", color: "rgba(255,255,255,.3)", marginBottom: "6px" }}>{p.tag}</div>
+        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".2em", color: "rgba(255,255,255,.3)", marginBottom: "6px" }}>{p.tag}</div>
         <h3 className="fd" style={{ fontSize: "clamp(15px,1.5vw,20px)", fontWeight: 800, color: "white", lineHeight: 1.1, marginBottom: "12px", letterSpacing: "-.01em" }}>{p.headline}</h3>
         <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
           {p.stats.map((s, si) => (
             <div key={si}>
               <div className="fd" style={{ fontSize: "clamp(18px,1.8vw,24px)", fontWeight: 900, color: p.accent, lineHeight: 1 }}>{s.v}</div>
-              <div className="fm" style={{ fontSize: "7px", letterSpacing: ".18em", color: "rgba(255,255,255,.38)", marginTop: "2px" }}>{s.l}</div>
+              <div className="fm" style={{ fontSize: "9px", letterSpacing: ".18em", color: "rgba(255,255,255,.38)", marginTop: "2px" }}>{s.l}</div>
             </div>
           ))}
         </div>
@@ -956,7 +956,7 @@ function WorkFrame({ active }: { active: boolean }) {
   const header = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "20px", flexWrap: "wrap", gap: "12px", flexShrink: 0 }}>
       <div>
-        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(56,135,255,.65)", marginBottom: "10px" }}>SELECTED WORK</div>
+        <div className="fm" style={{ fontSize: "15px", letterSpacing: ".26em", color: "rgba(140,185,255,1)", marginBottom: "10px" }}>SELECTED WORK</div>
         <h2 className="fd" style={{ fontSize: "clamp(30px,5vw,64px)", fontWeight: 900, color: "white", lineHeight: .93, letterSpacing: "-.025em" }}>PROOF OVER<br />PROMISES.</h2>
       </div>
       <div className="chip fm">47 BRANDS DOMINATED</div>
@@ -1086,7 +1086,7 @@ function ProcessFrame({ active }: { active: boolean }) {
       <Particles count={14} />
 
       {/* Label */}
-      <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: `${A}.6)`, marginBottom: "clamp(20px,4vh,40px)", position: "relative", zIndex: 1 }}>THE PROCESS</div>
+      <div className="fm" style={{ fontSize: "15px", letterSpacing: ".26em", color: "rgba(140,185,255,1)", marginBottom: "clamp(20px,4vh,40px)", position: "relative", zIndex: 1 }}>THE PROCESS</div>
 
       {/* Stage */}
       <div style={{ position: "relative", zIndex: 1, width: "min(760px,100%)", flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", minHeight: 0 }}>
@@ -1105,7 +1105,7 @@ function ProcessFrame({ active }: { active: boolean }) {
           <AnimatePresence mode="wait">
             <motion.div key={step} initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -26 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}>
               <div style={{ fontSize: "clamp(26px,5vw,40px)", marginBottom: "8px" }}>{s.icon}</div>
-              <div className="fm" style={{ fontSize: "9px", letterSpacing: ".34em", color: `${A}.75)`, marginBottom: "12px" }}>STEP {s.num}</div>
+              <div className="fm" style={{ fontSize: "11px", letterSpacing: ".34em", color: `${A}.75)`, marginBottom: "12px" }}>STEP {s.num}</div>
               <h3 className="fd" style={{ fontSize: "clamp(40px,8vw,92px)", fontWeight: 900, color: "white", letterSpacing: "-.03em", lineHeight: .95, marginBottom: "16px" }}>{s.title}</h3>
               <p className="fb" style={{ fontSize: "clamp(13px,1.5vw,16px)", color: "rgba(255,255,255,.5)", lineHeight: 1.7, maxWidth: "440px", margin: "0 auto", fontWeight: 300 }}>{s.desc}</p>
             </motion.div>
@@ -1127,7 +1127,7 @@ function ProcessFrame({ active }: { active: boolean }) {
                 width: step === i ? "100%" : step > i ? "100%" : "0%",
                 transition: step === i && !paused ? "width 2s linear" : "width .3s ease" }} />
             </div>
-            <span className="fm" style={{ fontSize: "8px", letterSpacing: ".18em", color: step === i ? "white" : "rgba(255,255,255,.35)", transition: "color .3s", textAlign: "left" }}>{st.num} {st.title}</span>
+            <span className="fm" style={{ fontSize: "10px", letterSpacing: ".18em", color: step === i ? "white" : "rgba(255,255,255,.35)", transition: "color .3s", textAlign: "left" }}>{st.num} {st.title}</span>
           </button>
         ))}
       </div>
@@ -1159,7 +1159,7 @@ function ProofStatViz({ idx }: { idx: number }) {
   );
   return (
     <div style={{ height: "40px", background: "rgba(0,0,0,.4)", borderRadius: "4px", border: `1px solid ${c}30`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div className="fm" style={{ fontSize: "9px", color: c, letterSpacing: ".2em", animation: "fadeUp .4s ease both" }}>RATE: 100%</div>
+      <div className="fm" style={{ fontSize: "11px", color: c, letterSpacing: ".2em", animation: "fadeUp .4s ease both" }}>RATE: 100%</div>
     </div>
   );
 }
@@ -1180,7 +1180,7 @@ function ProofFrame({ active }: { active: boolean }) {
     <div style={{ height: "100%", display: "flex", flexDirection: "column", padding: "clamp(80px,10vw,88px) clamp(20px,4vw,48px) clamp(20px,4vw,44px)", justifyContent: "space-between", position: "relative" }}>
       <Particles count={12} />
       <div style={{ position: "relative", zIndex: 1 }}>
-        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(56,135,255,.65)", marginBottom: "12px" }}>THE PROOF</div>
+        <div className="fm" style={{ fontSize: "15px", letterSpacing: ".26em", color: "rgba(140,185,255,1)", marginBottom: "12px" }}>THE PROOF</div>
         <h2 className="fd" style={{ fontSize: "clamp(32px,5vw,60px)", fontWeight: 900, color: "white", lineHeight: .93, letterSpacing: "-.025em" }}>
           RESULTS THAT<br />SPEAK FOR THEMSELVES.
         </h2>
@@ -1193,7 +1193,7 @@ function ProofFrame({ active }: { active: boolean }) {
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: `linear-gradient(to right,${statColors[i]},transparent)` }} />
             {active && <ProofStatViz idx={i} />}
             <div className="fd" style={{ fontSize: "clamp(30px,3.5vw,48px)", fontWeight: 900, color: "white", lineHeight: 1, letterSpacing: "-.03em", marginTop: "8px" }}>{s.v}</div>
-            <div className="fm" style={{ fontSize: "8px", letterSpacing: ".28em", color: statColors[i], opacity: .7, marginTop: "5px" }}>{s.l}</div>
+            <div className="fm" style={{ fontSize: "10px", letterSpacing: ".28em", color: statColors[i], opacity: .7, marginTop: "5px" }}>{s.l}</div>
           </motion.div>
         ))}
       </div>
@@ -1228,7 +1228,33 @@ function ContactFrame() {
   const [picks, setPicks] = useState<string[]>([]);
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
   const toggle = (c: string) => setPicks(p => p.includes(c) ? p.filter(x => x !== c) : [...p, c]);
+
+  const submit = async () => {
+    if (!email.trim() || sending) return;
+    setSending(true);
+    setError("");
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/contact@adaptdo.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          _subject: `New ADAPT enquiry — ${brand || "Unknown brand"}`,
+          Brand: brand,
+          "Looking for": picks.length ? picks.join(", ") : "Not specified",
+          Email: email,
+        }),
+      });
+      if (!res.ok) throw new Error("Request failed");
+      setDone(true);
+    } catch {
+      setError("Something went wrong — email us directly at contact@adaptdo.com");
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column", padding: "88px 48px 40px", overflow: "hidden auto", position: "relative" }}>
@@ -1236,7 +1262,7 @@ function ContactFrame() {
       <div className="contact-layout" style={{ display: "flex", gap: "64px", flex: 1, position: "relative", zIndex: 1 }}>
         {/* Left */}
         <div style={{ flex: "0 0 auto", maxWidth: "400px" }}>
-          <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "rgba(56,135,255,.65)", marginBottom: "18px" }}>LET'S BUILD</div>
+          <div className="fm" style={{ fontSize: "15px", letterSpacing: ".26em", color: "rgba(140,185,255,1)", marginBottom: "18px" }}>LET'S BUILD</div>
           <h2 className="fd" style={{ fontSize: "clamp(40px,6.5vw,88px)", fontWeight: 900, color: "white", lineHeight: .88, letterSpacing: "-.035em", marginBottom: "28px" }}>
             WANT TO MAKE<br />
             <span style={{ WebkitTextStroke: "2px rgba(56,135,255,.48)", WebkitTextFillColor: "transparent" }}>THEM JEALOUS?</span>
@@ -1246,7 +1272,7 @@ function ContactFrame() {
           </p>
           {[{ l: "EMAIL", v: "contact@adaptdo.com" }, { l: "ADDRESS", v: "Colombo, Sri Lanka" }].map(c => (
             <div key={c.l} style={{ display: "flex", gap: "16px", alignItems: "center", marginBottom: "10px" }}>
-              <span className="fm" style={{ fontSize: "8px", letterSpacing: ".3em", color: "rgba(56,135,255,.5)", width: "72px" }}>{c.l}</span>
+              <span className="fm" style={{ fontSize: "10px", letterSpacing: ".24em", color: "rgba(130,180,255,.9)", width: "78px" }}>{c.l}</span>
               <span className="fb" style={{ fontSize: "13px", color: "rgba(255,255,255,.48)", fontWeight: 300 }}>{c.v}</span>
             </div>
           ))}
@@ -1262,14 +1288,14 @@ function ContactFrame() {
               <AnimatePresence mode="wait">
                 {step === 0 && (
                   <motion.div key="s0" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: .4 }}>
-                    <div className="fm" style={{ fontSize: "9px", letterSpacing: ".38em", color: "rgba(56,135,255,.65)", marginBottom: "14px" }}>01 / BRAND NAME</div>
+                    <div className="fm" style={{ fontSize: "14px", letterSpacing: ".22em", color: "rgba(140,185,255,1)", fontWeight: 700, marginBottom: "16px" }}>01 / BRAND NAME</div>
                     <input className="underline-input fd" style={{ fontSize: "clamp(20px,2.8vw,36px)" }} placeholder="Your Brand Name" value={brand} onChange={e => setBrand(e.target.value)} onKeyDown={e => e.key === "Enter" && brand.trim() && setStep(1)} autoFocus />
                     <button data-h onClick={() => brand.trim() && setStep(1)} className="fb" style={{ marginTop: "22px", fontSize: "10px", letterSpacing: ".28em", color: brand.trim() ? "rgba(56,135,255,.9)" : "rgba(255,255,255,.2)", background: "none", border: "none", transition: "color .3s", fontWeight: 500 }}>CONTINUE →</button>
                   </motion.div>
                 )}
                 {step === 1 && (
                   <motion.div key="s1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: .4 }}>
-                    <div className="fm" style={{ fontSize: "9px", letterSpacing: ".38em", color: "rgba(56,135,255,.65)", marginBottom: "14px" }}>02 / WHAT DO YOU NEED?</div>
+                    <div className="fm" style={{ fontSize: "14px", letterSpacing: ".22em", color: "rgba(140,185,255,1)", fontWeight: 700, marginBottom: "16px" }}>02 / WHAT DO YOU NEED?</div>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "24px" }}>
                       {CHIPS_CONTACT.map(c => {
                         const on = picks.includes(c);
@@ -1281,16 +1307,16 @@ function ContactFrame() {
                 )}
                 {step === 2 && (
                   <motion.div key="s2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: .4 }}>
-                    <div className="fm" style={{ fontSize: "9px", letterSpacing: ".38em", color: "rgba(56,135,255,.65)", marginBottom: "14px" }}>03 / YOUR EMAIL</div>
-                    <input className="underline-input fd" type="email" style={{ fontSize: "clamp(18px,2.4vw,30px)", marginBottom: "24px", display: "block" }} placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => e.key === "Enter" && email.trim() && setDone(true)} autoFocus />
-                    <button data-h className="cta-glow fd" onClick={() => email.trim() && setDone(true)} style={{ fontSize: "11px", letterSpacing: ".22em", color: "white", background: "rgba(56,135,255,.12)", border: "1px solid rgba(56,135,255,.6)", padding: "16px 40px", fontWeight: 700 }}>LAUNCH →</button>
+                    <div className="fm" style={{ fontSize: "14px", letterSpacing: ".22em", color: "rgba(140,185,255,1)", fontWeight: 700, marginBottom: "16px" }}>03 / YOUR EMAIL</div>
+                    <input className="underline-input fd" type="email" style={{ fontSize: "clamp(18px,2.4vw,30px)", marginBottom: "24px", display: "block" }} placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => e.key === "Enter" && submit()} autoFocus />
+                    <button data-h className="cta-glow fd" onClick={submit} disabled={sending} style={{ fontSize: "11px", letterSpacing: ".22em", color: "white", background: "rgba(56,135,255,.12)", border: "1px solid rgba(56,135,255,.6)", padding: "16px 40px", fontWeight: 700, opacity: sending ? .6 : 1 }}>{sending ? "SENDING…" : "LAUNCH →"}</button>
+                    {error && <p className="fb" style={{ marginTop: "16px", fontSize: "12px", color: "#ff7a7a", fontWeight: 400 }}>{error}</p>}
                   </motion.div>
                 )}
               </AnimatePresence>
             </>
           ) : (
             <motion.div initial={{ opacity: 0, scale: .94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .6, ease: [.16, 1, .3, 1] }}>
-              <div style={{ fontSize: "44px", marginBottom: "18px" }}>⚡</div>
               <h3 className="fd" style={{ fontSize: "clamp(26px,3.5vw,44px)", fontWeight: 900, color: "white", marginBottom: "12px", letterSpacing: "-.02em" }}>We'll be in touch.</h3>
               <p className="fb" style={{ fontSize: "15px", color: "rgba(255,255,255,.4)", lineHeight: 1.7, fontWeight: 300 }}>Get ready, <span style={{ color: "rgba(56,135,255,.9)", fontWeight: 600 }}>{brand}</span>. We're about to change everything.</p>
             </motion.div>
@@ -1302,7 +1328,7 @@ function ContactFrame() {
       <div className="contact-footer" style={{ marginTop: "auto", paddingTop: "24px", borderTop: "1px solid rgba(255,255,255,.05)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "14px", position: "relative", zIndex: 1 }}>
         <span className="fd" style={{ fontSize: "17px", fontWeight: 900, color: "white", letterSpacing: "-.02em" }}>ADAPT</span>
         <p className="fb cf-tag" style={{ fontSize: "11px", color: "rgba(255,255,255,.24)", lineHeight: 1.6, maxWidth: "400px", textAlign: "center", fontWeight: 300 }}>⚡ Yeah, we designed and built this entire experience. Want yours this premium? You know what to do.</p>
-        <span className="fm" style={{ fontSize: "9px", color: "rgba(255,255,255,.18)", letterSpacing: ".22em" }}>© 2026 ADAPT.CO</span>
+        <span className="fm" style={{ fontSize: "11px", color: "rgba(255,255,255,.18)", letterSpacing: ".22em" }}>© 2026 ADAPT.CO</span>
       </div>
     </div>
   );
@@ -1324,11 +1350,11 @@ function PillarTile({ p, active, idx }: { p: typeof PILLARS[0]; active: boolean;
       <div className="pc-media" style={{ position: "absolute", inset: 0, background: `radial-gradient(circle at 50% 25%, ${p.accent}2e, transparent 62%)` }} />
       {/* number */}
       <div className="fm" style={{ position: "absolute", top: "16px", left: "18px", fontSize: "10px", letterSpacing: ".3em", color: p.accent, zIndex: 2 }}>{p.num}</div>
-      <div className="fm pc-cta" style={{ position: "absolute", top: "16px", right: "18px", fontSize: "8px", letterSpacing: ".2em", color: "white", border: `1px solid ${p.accent}`, padding: "5px 10px", zIndex: 2 }}>DETAIL</div>
+      <div className="fm pc-cta" style={{ position: "absolute", top: "16px", right: "18px", fontSize: "10px", letterSpacing: ".2em", color: "white", border: `1px solid ${p.accent}`, padding: "5px 10px", zIndex: 2 }}>DETAIL</div>
 
       {/* base title */}
       <div style={{ position: "absolute", left: "18px", right: "18px", bottom: "18px", zIndex: 1 }}>
-        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".22em", color: p.accent, marginBottom: "8px", opacity: hov ? 0 : 1, transition: "opacity .3s" }}>{p.tagline.toUpperCase()}</div>
+        <div className="fm" style={{ fontSize: "11px", letterSpacing: ".22em", color: p.accent, marginBottom: "8px", opacity: hov ? 0 : 1, transition: "opacity .3s" }}>{p.tagline.toUpperCase()}</div>
         <h3 className="fd" style={{ fontSize: "clamp(19px,1.9vw,26px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-.02em" }}>{p.title}</h3>
       </div>
 
@@ -1348,7 +1374,7 @@ function PillarTile({ p, active, idx }: { p: typeof PILLARS[0]; active: boolean;
             </div>
           ))}
         </div>
-        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".06em", color: p.accent, lineHeight: 1.5 }}>↳ {p.deep.outcome}</div>
+        <div className="fm" style={{ fontSize: "11px", letterSpacing: ".06em", color: p.accent, lineHeight: 1.5 }}>↳ {p.deep.outcome}</div>
       </div>
     </motion.div>
   );
@@ -1359,7 +1385,7 @@ function PillarsFrame({ active }: { active: boolean }) {
   const header = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "18px", flexWrap: "wrap", gap: "12px", flexShrink: 0 }}>
       <div>
-        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "#3887ff", marginBottom: "10px" }}>THE CREATIVE FLOOR</div>
+        <div className="fm" style={{ fontSize: "15px", letterSpacing: ".26em", color: "rgba(140,185,255,1)", marginBottom: "10px" }}>THE CREATIVE FLOOR</div>
         <h2 className="fd" style={{ fontSize: "clamp(32px,5.2vw,68px)", fontWeight: 900, color: "white", lineHeight: .96, letterSpacing: "-.03em" }}>Content Pillars</h2>
       </div>
       {!mobile && <p className="fb" style={{ fontSize: "12px", color: "rgba(255,255,255,.32)", maxWidth: "210px", lineHeight: 1.8, textAlign: "right", fontWeight: 300 }}>Editorial, high-fashion content that makes your brand impossible to scroll past. <span style={{ color: "#3887ff" }}>Hover to look inside.</span></p>}
@@ -1403,7 +1429,7 @@ function SolutionsFrame({ active }: { active: boolean }) {
 
   const header = (
     <div style={{ marginBottom: "18px", flexShrink: 0 }}>
-      <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: accent, marginBottom: "10px" }}>THE STRATEGY ROOM</div>
+      <div className="fm" style={{ fontSize: "15px", letterSpacing: ".26em", color: "rgba(140,185,255,1)", marginBottom: "10px" }}>THE STRATEGY ROOM</div>
       <h2 className="fd" style={{ fontSize: "clamp(32px,5.2vw,68px)", fontWeight: 900, color: "white", lineHeight: .94, letterSpacing: "-.03em" }}>Marketing Solutions</h2>
     </div>
   );
@@ -1416,14 +1442,14 @@ function SolutionsFrame({ active }: { active: boolean }) {
           renderItem={(s) => (
             <div style={{ height: "100%", background: s.flagship ? "linear-gradient(135deg,rgba(139,159,232,.16),rgba(20,28,60,.5))" : "rgba(255,255,255,.025)", border: `1px solid ${s.flagship ? accent + "80" : "rgba(255,255,255,.08)"}`, borderRadius: "5px", padding: "18px", display: "flex", flexDirection: "column", gap: "8px" }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span className="fm" style={{ fontSize: "9px", letterSpacing: ".3em", color: accent }}>{s.num}</span>
-                <span className="fm" style={{ fontSize: "8px", letterSpacing: ".2em", color: s.flagship ? accent : "rgba(255,255,255,.3)" }}>{s.cat}{s.flagship ? " ★" : ""}</span>
+                <span className="fm" style={{ fontSize: "11px", letterSpacing: ".3em", color: accent }}>{s.num}</span>
+                <span className="fm" style={{ fontSize: "10px", letterSpacing: ".2em", color: s.flagship ? accent : "rgba(255,255,255,.3)" }}>{s.cat}{s.flagship ? " ★" : ""}</span>
               </div>
               <h3 className="fd" style={{ fontSize: "17px", fontWeight: 800, color: "white", lineHeight: 1.1, letterSpacing: "-.02em" }}>{s.title}</h3>
               <p className="fb" style={{ fontSize: "12.5px", color: "rgba(255,255,255,.5)", lineHeight: 1.55, fontWeight: 300 }}>{s.desc}</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "auto" }}>
                 {(s.flagship ? s.phases.map((ph: any) => ph.label) : s.deliverables).slice(0, 4).map((d: string) => (
-                  <span key={d} className="fm" style={{ fontSize: "8px", letterSpacing: ".08em", color: "rgba(255,255,255,.6)", border: "1px solid rgba(255,255,255,.1)", padding: "4px 8px", borderRadius: "2px" }}>{d}</span>
+                  <span key={d} className="fm" style={{ fontSize: "10px", letterSpacing: ".08em", color: "rgba(255,255,255,.6)", border: "1px solid rgba(255,255,255,.1)", padding: "4px 8px", borderRadius: "2px" }}>{d}</span>
                 ))}
               </div>
             </div>
@@ -1445,9 +1471,9 @@ function SolutionsFrame({ active }: { active: boolean }) {
             return (
               <button key={it.id} data-h onMouseEnter={() => setSel(i)} onClick={() => setSel(i)}
                 style={{ textAlign: "left", background: on ? `${accent}14` : "transparent", border: "none", borderLeft: `2px solid ${on ? accent : "transparent"}`, padding: "12px 16px", display: "flex", alignItems: "center", gap: "14px", cursor: "pointer", transition: "background .3s, border-color .3s" }}>
-                <span className="fm" style={{ fontSize: "9px", letterSpacing: ".2em", color: on ? accent : "rgba(255,255,255,.3)", transition: "color .3s" }}>{it.num}</span>
+                <span className="fm" style={{ fontSize: "11px", letterSpacing: ".2em", color: on ? accent : "rgba(255,255,255,.3)", transition: "color .3s" }}>{it.num}</span>
                 <span className="fd" style={{ fontSize: "clamp(14px,1.3vw,17px)", fontWeight: on ? 800 : 500, color: on ? "white" : "rgba(255,255,255,.45)", letterSpacing: "-.01em", transition: "all .3s", display: "flex", alignItems: "center", gap: "8px" }}>
-                  {it.title}{it.flagship && <span style={{ fontSize: "9px", color: accent }}>★</span>}
+                  {it.title}{it.flagship && <span style={{ fontSize: "11px", color: accent }}>★</span>}
                 </span>
               </button>
             );
@@ -1459,7 +1485,7 @@ function SolutionsFrame({ active }: { active: boolean }) {
           <div style={{ position: "absolute", top: 0, right: 0, width: "180px", height: "180px", background: `radial-gradient(circle at 100% 0%, ${accent}1f, transparent 65%)`, pointerEvents: "none" }} />
           <AnimatePresence mode="wait">
             <motion.div key={sel} initial={{ opacity: 0, x: 26 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -26 }} transition={{ duration: .45, ease: [.16, 1, .3, 1] }} style={{ position: "relative" }}>
-              <div className="fm" style={{ fontSize: "9px", letterSpacing: ".3em", color: accent, marginBottom: "12px" }}>{s.num} · {s.cat}</div>
+              <div className="fm" style={{ fontSize: "11px", letterSpacing: ".3em", color: accent, marginBottom: "12px" }}>{s.num} · {s.cat}</div>
               <h3 className="fd" style={{ fontSize: "clamp(26px,3vw,40px)", fontWeight: 900, color: "white", lineHeight: 1.02, letterSpacing: "-.03em", marginBottom: "12px" }}>{s.title}</h3>
               <p className="fb" style={{ fontSize: "15px", color: "rgba(255,255,255,.55)", lineHeight: 1.6, fontWeight: 300, marginBottom: "24px", maxWidth: "520px" }}>{s.desc}</p>
 
@@ -1467,7 +1493,7 @@ function SolutionsFrame({ active }: { active: boolean }) {
                 <FlagshipTimeline phases={s.phases} accent={accent} />
               ) : (
                 <>
-                  <div className="fm" style={{ fontSize: "9px", letterSpacing: ".3em", color: "rgba(255,255,255,.4)", marginBottom: "14px" }}>WHAT YOU GET</div>
+                  <div className="fm" style={{ fontSize: "11px", letterSpacing: ".3em", color: "rgba(255,255,255,.4)", marginBottom: "14px" }}>WHAT YOU GET</div>
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "8px", marginBottom: "24px" }}>
                     {s.deliverables.map((d, i) => (
                       <motion.div key={d} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 * i, duration: .4 }}
@@ -1478,7 +1504,7 @@ function SolutionsFrame({ active }: { active: boolean }) {
                     ))}
                   </div>
                   <div style={{ borderLeft: `2px solid ${accent}`, paddingLeft: "16px" }}>
-                    <div className="fm" style={{ fontSize: "8px", letterSpacing: ".3em", color: accent, marginBottom: "6px" }}>THE OUTCOME</div>
+                    <div className="fm" style={{ fontSize: "10px", letterSpacing: ".3em", color: accent, marginBottom: "6px" }}>THE OUTCOME</div>
                     <p className="fd" style={{ fontSize: "clamp(16px,1.8vw,22px)", color: "white", fontWeight: 700, lineHeight: 1.3, letterSpacing: "-.01em" }}>{s.outcome}</p>
                   </div>
                 </>
@@ -1503,8 +1529,8 @@ function FlagshipTimeline({ phases, accent }: { phases: any[]; accent: string })
         <div style={{ display: "flex", justifyContent: "space-between", position: "relative" }}>
           {phases.map((p, i) => (
             <button key={p.key} data-h onClick={() => setActive(i)} style={{ background: "none", border: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: "9px", flex: 1, cursor: "pointer" }}>
-              <span style={{ width: i <= active ? "20px" : "15px", height: i <= active ? "20px" : "15px", borderRadius: "50%", background: i <= active ? accent : "rgba(255,255,255,.12)", border: `2px solid ${i <= active ? accent : "rgba(255,255,255,.2)"}`, boxShadow: i === active ? `0 0 16px ${accent}` : "none", transition: "all .4s ease", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "8px", color: "#0a0a12", fontWeight: 900 }}>{i < active ? "✓" : ""}</span>
-              <span className="fm" style={{ fontSize: "7.5px", letterSpacing: ".1em", color: i === active ? "white" : "rgba(255,255,255,.4)", textAlign: "center", transition: "color .4s", maxWidth: "80px", lineHeight: 1.4 }}>{p.label.toUpperCase()}</span>
+              <span style={{ width: i <= active ? "20px" : "15px", height: i <= active ? "20px" : "15px", borderRadius: "50%", background: i <= active ? accent : "rgba(255,255,255,.12)", border: `2px solid ${i <= active ? accent : "rgba(255,255,255,.2)"}`, boxShadow: i === active ? `0 0 16px ${accent}` : "none", transition: "all .4s ease", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", color: "#0a0a12", fontWeight: 900 }}>{i < active ? "✓" : ""}</span>
+              <span className="fm" style={{ fontSize: "9px", letterSpacing: ".1em", color: i === active ? "white" : "rgba(255,255,255,.4)", textAlign: "center", transition: "color .4s", maxWidth: "80px", lineHeight: 1.4 }}>{p.label.toUpperCase()}</span>
             </button>
           ))}
         </div>
@@ -1515,13 +1541,13 @@ function FlagshipTimeline({ phases, accent }: { phases: any[]; accent: string })
           style={{ background: "rgba(255,255,255,.03)", border: `1px solid ${accent}30`, borderRadius: "4px", padding: "16px 18px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "8px" }}>
             <h4 className="fd" style={{ fontSize: "clamp(18px,2.2vw,26px)", fontWeight: 800, color: "white", letterSpacing: "-.02em" }}>{phases[active].label}</h4>
-            <span className="fm" style={{ fontSize: "8px", letterSpacing: ".24em", color: accent }}>{active + 1}/{phases.length}</span>
+            <span className="fm" style={{ fontSize: "10px", letterSpacing: ".24em", color: accent }}>{active + 1}/{phases.length}</span>
           </div>
           <p className="fb" style={{ fontSize: "12.5px", color: "rgba(255,255,255,.5)", marginBottom: "14px", fontWeight: 300 }}>{phases[active].desc}</p>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "7px" }}>
             {phases[active].points.map((pt: string, i: number) => (
               <div key={pt} className="fb" style={{ fontSize: "11.5px", color: "rgba(255,255,255,.74)", display: "flex", gap: "9px", alignItems: "flex-start", background: "rgba(0,0,0,.25)", padding: "9px 11px", borderRadius: "3px", border: "1px solid rgba(255,255,255,.05)" }}>
-                <span className="fm" style={{ color: accent, fontSize: "9px", marginTop: "1px" }}>{String(i + 1).padStart(2, "0")}</span>{pt}
+                <span className="fm" style={{ color: accent, fontSize: "11px", marginTop: "1px" }}>{String(i + 1).padStart(2, "0")}</span>{pt}
               </div>
             ))}
           </div>
@@ -1642,7 +1668,7 @@ export default function App() {
       <AnimatePresence>
         {frame === 0 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ delay: 3 }} className="mob-show" style={{ position: "fixed", bottom: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 99, flexDirection: "column", alignItems: "center", gap: "6px" }}>
-            <span className="fm" style={{ fontSize: "8px", letterSpacing: ".36em", color: "rgba(255,255,255,.25)" }}>SWIPE UP</span>
+            <span className="fm" style={{ fontSize: "10px", letterSpacing: ".36em", color: "rgba(255,255,255,.25)" }}>SWIPE UP</span>
             <div style={{ width: "1px", height: "28px", background: "rgba(56,135,255,.5)", animation: "slideBar 2s ease-in-out infinite" }} />
           </motion.div>
         )}
