@@ -1228,7 +1228,33 @@ function ContactFrame() {
   const [picks, setPicks] = useState<string[]>([]);
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
   const toggle = (c: string) => setPicks(p => p.includes(c) ? p.filter(x => x !== c) : [...p, c]);
+
+  const submit = async () => {
+    if (!email.trim() || sending) return;
+    setSending(true);
+    setError("");
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/contact@adaptdo.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          _subject: `New ADAPT enquiry — ${brand || "Unknown brand"}`,
+          Brand: brand,
+          "Looking for": picks.length ? picks.join(", ") : "Not specified",
+          Email: email,
+        }),
+      });
+      if (!res.ok) throw new Error("Request failed");
+      setDone(true);
+    } catch {
+      setError("Something went wrong — email us directly at contact@adaptdo.com");
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <div style={{ height: "100%", display: "flex", flexDirection: "column", padding: "88px 48px 40px", overflow: "hidden auto", position: "relative" }}>
@@ -1282,8 +1308,9 @@ function ContactFrame() {
                 {step === 2 && (
                   <motion.div key="s2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: .4 }}>
                     <div className="fm" style={{ fontSize: "14px", letterSpacing: ".22em", color: "rgba(140,185,255,1)", fontWeight: 700, marginBottom: "16px" }}>03 / YOUR EMAIL</div>
-                    <input className="underline-input fd" type="email" style={{ fontSize: "clamp(18px,2.4vw,30px)", marginBottom: "24px", display: "block" }} placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => e.key === "Enter" && email.trim() && setDone(true)} autoFocus />
-                    <button data-h className="cta-glow fd" onClick={() => email.trim() && setDone(true)} style={{ fontSize: "11px", letterSpacing: ".22em", color: "white", background: "rgba(56,135,255,.12)", border: "1px solid rgba(56,135,255,.6)", padding: "16px 40px", fontWeight: 700 }}>LAUNCH →</button>
+                    <input className="underline-input fd" type="email" style={{ fontSize: "clamp(18px,2.4vw,30px)", marginBottom: "24px", display: "block" }} placeholder="your@email.com" value={email} onChange={e => setEmail(e.target.value)} onKeyDown={e => e.key === "Enter" && submit()} autoFocus />
+                    <button data-h className="cta-glow fd" onClick={submit} disabled={sending} style={{ fontSize: "11px", letterSpacing: ".22em", color: "white", background: "rgba(56,135,255,.12)", border: "1px solid rgba(56,135,255,.6)", padding: "16px 40px", fontWeight: 700, opacity: sending ? .6 : 1 }}>{sending ? "SENDING…" : "LAUNCH →"}</button>
+                    {error && <p className="fb" style={{ marginTop: "16px", fontSize: "12px", color: "#ff7a7a", fontWeight: 400 }}>{error}</p>}
                   </motion.div>
                 )}
               </AnimatePresence>
