@@ -205,7 +205,7 @@ const PILLARS = [
     id: "editorial", num: "01", title: "Editorial Product Content",
     tagline: "Product as protagonist.",
     desc: "Magazine-grade product imagery that frames your pieces like a fashion feature — not a catalogue.",
-    accent: "#e8c9a8", grad: "linear-gradient(150deg,#2a2018,#0c0906)",
+    accent: "#3887ff", grad: "linear-gradient(150deg,#0e1d3a,#060a16)",
     deep: {
       intro: "We treat every product like the cover story. Considered lighting, set design, and styling that makes the ordinary feel collectible.",
       deliverables: ["Hero & detail still life", "On-model editorial sets", "Flat-lay & texture studies", "Seasonal lookbooks"],
@@ -216,7 +216,7 @@ const PILLARS = [
     id: "occasion", num: "02", title: "Occasion Styling",
     tagline: "Dress the moment.",
     desc: "Styling stories built around real occasions — so customers see themselves wearing it, not just looking at it.",
-    accent: "#d6b3c9", grad: "linear-gradient(150deg,#2a1822,#0c0608)",
+    accent: "#60a5fa", grad: "linear-gradient(150deg,#0c1a30,#05080f)",
     deep: {
       intro: "Context sells. We build styling narratives around weddings, dinners, travel and seasons that turn a single product into a dozen reasons to buy.",
       deliverables: ["Occasion lookbooks", "Styling guides & pairings", "Seasonal capsule stories", "Gifting edits"],
@@ -227,7 +227,7 @@ const PILLARS = [
     id: "shortform", num: "03", title: "Short-Form Video",
     tagline: "Engineered to spread.",
     desc: "Scroll-stopping reels and TikToks built on hooks, pacing and trends that the algorithm rewards.",
-    accent: "#b3c9e0", grad: "linear-gradient(150deg,#16202c,#06090c)",
+    accent: "#38bdf8", grad: "linear-gradient(150deg,#0a1f2e,#05080d)",
     deep: {
       intro: "Native, fast, and made to be watched twice. We script the hook, shoot for vertical, and cut for retention.",
       deliverables: ["Hook-led reels & TikToks", "Trend-jacking edits", "UGC-style spots", "Series formats"],
@@ -238,7 +238,7 @@ const PILLARS = [
     id: "behind", num: "04", title: "Behind the Brand",
     tagline: "The human layer.",
     desc: "Founder story, craft, and process content that builds the trust no ad budget can buy.",
-    accent: "#c9c2b3", grad: "linear-gradient(150deg,#22201a,#08070a)",
+    accent: "#818cf8", grad: "linear-gradient(150deg,#141a38,#070912)",
     deep: {
       intro: "People buy from people. We document the makers, the materials and the moments that make your brand worth believing in.",
       deliverables: ["Founder & team films", "Craft & process docs", "Studio day-in-the-life", "Values & mission pieces"],
@@ -249,7 +249,7 @@ const PILLARS = [
     id: "proof", num: "05", title: "Social Proof & Creator Styling",
     tagline: "Borrowed credibility.",
     desc: "Creator collaborations and customer proof that turn strangers into believers.",
-    accent: "#c4b3e0", grad: "linear-gradient(150deg,#20182c,#08060c)",
+    accent: "#6366f1", grad: "linear-gradient(150deg,#12153a,#070814)",
     deep: {
       intro: "We orchestrate creators and customers into a steady drumbeat of proof — styled, on-brand, and built to convert.",
       deliverables: ["Creator styling direction", "UGC sourcing & rights", "Review & testimonial edits", "Reposting frameworks"],
@@ -260,7 +260,7 @@ const PILLARS = [
     id: "softsell", num: "06", title: "Soft-Sell Conversion Content",
     tagline: "Sell without shouting.",
     desc: "Content that converts through desire and education — never the hard pitch.",
-    accent: "#b3e0c9", grad: "linear-gradient(150deg,#16261e,#06090a)",
+    accent: "#22d3ee", grad: "linear-gradient(150deg,#0a2228,#05090c)",
     deep: {
       intro: "The close that doesn't feel like one. Value-first content that answers objections and makes buying the obvious next step.",
       deliverables: ["Education & how-to content", "Objection-handling posts", "Comparison & value stories", "Subtle CTA frameworks"],
@@ -355,15 +355,7 @@ const PROJECTS = [
     type: "code",
   },
   {
-    id: "03", sector: "Athletic / Lifestyle", tag: "Ground Campaign + Events",
-    headline: "14 Cities. 3 Weeks. Zero Budget Wasted.",
-    stats: [{ v: "14", l: "Cities Hit" }, { v: "62K", l: "Activations" }, { v: "3x", l: "Store Traffic" }],
-    accent: "#fbbf24",
-    grad: "linear-gradient(160deg,#201204 0%,#0e0802 100%)",
-    type: "map",
-  },
-  {
-    id: "04", sector: "Fashion / Streetwear", tag: "Cinema Content + Viral",
+    id: "03", sector: "Fashion / Streetwear", tag: "Cinema Content + Viral",
     headline: "8.4M Views Before the First Ad Spend",
     stats: [{ v: "8.4M", l: "Organic Views" }, { v: "#1", l: "Trending x3" }, { v: "280%", l: "Followers" }],
     accent: "#f87171",
@@ -371,7 +363,7 @@ const PROJECTS = [
     type: "film",
   },
   {
-    id: "05", sector: "Experiential / Action Sports", tag: "Launch Strategy + Community Build",
+    id: "04", sector: "Experiential / Action Sports", tag: "Launch Strategy + Community Build",
     headline: "Monetizing the Concrete: 10K Visitors in Month One",
     stats: [{ v: "10K+", l: "Foot Traffic" }, { v: "120%", l: "Sponsorship Goal" }, { v: "Zero", l: "Ad Spend" }],
     accent: "#34d399",
@@ -379,7 +371,7 @@ const PROJECTS = [
     type: "arc",
   },
   {
-    id: "06", sector: "Health Tech / Wearables", tag: "E-Commerce + Product Launch",
+    id: "05", sector: "Health Tech / Wearables", tag: "E-Commerce + Product Launch",
     headline: "Strapping In 50K New Users Without Breaking a Sweat",
     stats: [{ v: "50K", l: "Active Users" }, { v: "-35%", l: "Cart Abandonment" }, { v: "$1M", l: "Q1 Sales" }],
     accent: "#ec4899",
@@ -551,9 +543,6 @@ function HeroFrame({ onNext }: { onNext: () => void }) {
           WE BUILD<br />
           <span style={{ WebkitTextStroke: "2px rgba(56,135,255,.55)", WebkitTextFillColor: "transparent", display: "inline-block" }}>ADAPT.</span>
         </h1>
-        <p className="fb" style={{ fontSize: "clamp(14px,1.3vw,17px)", color: "rgba(255,255,255,.38)", maxWidth: "520px", margin: "0 auto 52px", lineHeight: 1.78, fontWeight: 300 }}>
-          An all-in-one execution squad for brands that refuse to look ordinary. Strategy, social, cinema-grade content, next-gen web — and the streets. We handle everything.
-        </p>
         <div style={{ display: "flex", gap: "18px", flexWrap: "wrap", justifyContent: "center" }}>
           <button data-h className="cta-glow fd" onClick={onNext} style={{ fontSize: "11px", letterSpacing: ".22em", color: "white", background: "rgba(56,135,255,.1)", border: "1px solid rgba(56,135,255,.55)", padding: "18px 48px", fontWeight: 700 }}>[ ESCAPE THE ORDINARY ]</button>
           <button data-h className="fb" onClick={onNext} style={{ fontSize: "11px", letterSpacing: ".1em", color: "rgba(255,255,255,.45)", background: "transparent", border: "1px solid rgba(255,255,255,.12)", padding: "18px 36px", fontWeight: 400, transition: "all .3s" }} onMouseEnter={e => { e.currentTarget.style.color = "white"; e.currentTarget.style.borderColor = "rgba(255,255,255,.3)"; }} onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,.45)"; e.currentTarget.style.borderColor = "rgba(255,255,255,.12)"; }}>See Our Work ↓</button>
@@ -1339,8 +1328,8 @@ function PillarTile({ p, active, idx }: { p: typeof PILLARS[0]; active: boolean;
 
       {/* base title */}
       <div style={{ position: "absolute", left: "18px", right: "18px", bottom: "18px", zIndex: 1 }}>
-        <div className="fs" style={{ fontSize: "11px", color: p.accent, fontStyle: "italic", marginBottom: "6px", opacity: hov ? 0 : 1, transition: "opacity .3s" }}>{p.tagline}</div>
-        <h3 className="fs" style={{ fontSize: "clamp(19px,1.9vw,26px)", fontWeight: 400, color: "white", lineHeight: 1.05, letterSpacing: "-.01em" }}>{p.title}</h3>
+        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".22em", color: p.accent, marginBottom: "8px", opacity: hov ? 0 : 1, transition: "opacity .3s" }}>{p.tagline.toUpperCase()}</div>
+        <h3 className="fd" style={{ fontSize: "clamp(19px,1.9vw,26px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-.02em" }}>{p.title}</h3>
       </div>
 
       {/* hover-reveal detail */}
@@ -1351,7 +1340,7 @@ function PillarTile({ p, active, idx }: { p: typeof PILLARS[0]; active: boolean;
         opacity: hov ? 1 : 0, transform: hov ? "translateY(0)" : "translateY(14px)",
         transition: "opacity .45s ease, transform .45s cubic-bezier(.23,1,.32,1)", pointerEvents: "none",
       }}>
-        <h3 className="fs" style={{ fontSize: "clamp(18px,1.8vw,24px)", fontWeight: 400, color: "white", marginBottom: "12px", letterSpacing: "-.01em" }}>{p.title}</h3>
+        <h3 className="fd" style={{ fontSize: "clamp(18px,1.8vw,24px)", fontWeight: 800, color: "white", marginBottom: "12px", letterSpacing: "-.02em" }}>{p.title}</h3>
         <div style={{ display: "flex", flexDirection: "column", gap: "6px", marginBottom: "14px" }}>
           {p.deep.deliverables.map((d, i) => (
             <div key={d} className="fb" style={{ fontSize: "11.5px", color: "rgba(255,255,255,.72)", display: "flex", gap: "9px", alignItems: "center", transform: hov ? "translateX(0)" : "translateX(-8px)", opacity: hov ? 1 : 0, transition: `all .4s ease ${0.06 * i + 0.1}s` }}>
@@ -1370,10 +1359,10 @@ function PillarsFrame({ active }: { active: boolean }) {
   const header = (
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "18px", flexWrap: "wrap", gap: "12px", flexShrink: 0 }}>
       <div>
-        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "#e8c9a8", marginBottom: "10px" }}>THE CREATIVE FLOOR</div>
-        <h2 className="fs" style={{ fontSize: "clamp(32px,5.2vw,68px)", fontWeight: 400, color: "white", lineHeight: .96, letterSpacing: "-.01em" }}>Content Pillars</h2>
+        <div className="fm" style={{ fontSize: "9px", letterSpacing: ".44em", color: "#3887ff", marginBottom: "10px" }}>THE CREATIVE FLOOR</div>
+        <h2 className="fd" style={{ fontSize: "clamp(32px,5.2vw,68px)", fontWeight: 900, color: "white", lineHeight: .96, letterSpacing: "-.03em" }}>Content Pillars</h2>
       </div>
-      {!mobile && <p className="fb" style={{ fontSize: "12px", color: "rgba(255,255,255,.32)", maxWidth: "210px", lineHeight: 1.8, textAlign: "right", fontWeight: 300 }}>Editorial, high-fashion content that makes your brand impossible to scroll past. <span style={{ color: "#e8c9a8" }}>Hover to look inside.</span></p>}
+      {!mobile && <p className="fb" style={{ fontSize: "12px", color: "rgba(255,255,255,.32)", maxWidth: "210px", lineHeight: 1.8, textAlign: "right", fontWeight: 300 }}>Editorial, high-fashion content that makes your brand impossible to scroll past. <span style={{ color: "#3887ff" }}>Hover to look inside.</span></p>}
     </div>
   );
 
